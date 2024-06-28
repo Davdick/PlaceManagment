@@ -13,5 +13,5 @@
    - Maps cubicles within different work zones to help manage office space efficiently.
    - Offers a visual representation of the office layout for easy navigation and planning.
 5. Report Generation
-- Generates detailed reports in Excel format.
-- Reports can include data on cubicle occupancy, user assignments, and overall workspace utilization.
+   - Generates detailed reports in Excel format.
+   - Reports can include data on cubicle occupancy, user assignments, and overall workspace utilization.
