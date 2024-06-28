@@ -1,0 +1,114 @@
+﻿@model IEnumerable<GestionLugaresFacilities.Models.Tbl_Place_AssignmentRequests>
+
+
+<link rel="stylesheet" href="~/Content/btnSingle.css" />
+<link rel="stylesheet" href="~/Content/btnDel.css" />
+<h2>Tickets</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Users.id_employee)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Code.Tbl_Place_Diagram.Tbl_Place_Area_.name_area)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Code.Tbl_Place_Diagram.Tbl_Place_Subarea.name_subarea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Code.Tbl_Place_Diagram.piso_snorkel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Code.code)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Users.id_employee)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Code.Tbl_Place_Diagram.Tbl_Place_Area_.name_area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Code.Tbl_Place_Diagram.Tbl_Place_Subarea.name_subarea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Code.Tbl_Place_Diagram.piso_snorkel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Code.code)
+            </td>
+            <td class="cont-btns">
+                @*@Html.ActionLink("Accept", "Create", "Assignments", new { id_code = item.Code.id_code, id_users = item.User.id_users }, null) |*@
+                <button class="btn-single" onclick="acceptRequest(@item.Tbl_Place_Code.id_code, @item.Tbl_Place_Users.id_users)">
+                    OK
+                </button>
+                @{ 
+                    bool valor = true;
+                }
+                @*@Html.ActionLink("View", "JUASview", "Diagrams", new { id = item.Code.Diagram.id_diagram }, null) |*@
+                <a href='@Url.Action("editAdmin", "Tbl_Place_Diagram")?id=@item.Tbl_Place_Code.Tbl_Place_Diagram.id_diagram&viewTicket=@valor.ToString()'><img class="img-eye" src="~/Content/visible_eye_5752.png" alt="Ver"></a>
+                <button class="btn-info" onclick=modalInfo('@item.Tbl_Place_Users.id_employee')>Info.</button>
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.id_assreq })*@
+                <button class="delete-button" onclick="deletePartial(@item.id_assreq)">
+                    <svg class="delete-svgIcon" viewBox="0 0 448 512">
+                        <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+    }
+</table>
+<!--MODAL-->
+<div id="myModalUsers" class="modal">
+    <div class="modal-content">
+        <span id="close"class="close">&times;</span>
+        <h2>Usuario</h2>
+        <div class="container-datas">
+            <div>
+                <label for="idemp">ID empleado</label>
+                <input id="idemp" type="text" disabled />
+
+                <label for="nemp">Nombre empleado</label>
+                <input id="nemp" type="text" disabled />
+            </div>
+            <div>
+                <label for="ibt">IBT</label>
+                <input id="ibt" type="text" disabled />
+
+                <label for="email">Email</label>
+                <input id="email" type="text" disabled />
+
+                <label for="sup">Supervisor</label>
+                <input id="sup" type="text" disabled />
+
+            </div>
+            <div>
+                <img width="100" class="img-responsive img-rounded" id="imagenApi" src="" alt="Imagen desde API">
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+@section Scripts{
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+   
+</script>
+    
+}
+<style>
+    
+</style>
+

@@ -1,0 +1,132 @@
+﻿@model IEnumerable<GestionLugaresFacilities.Models.Tbl_Place_Assignment>
+
+<link rel="stylesheet" href="~/Content/tableStyle.css" />
+<link rel="stylesheet" href="~/Content/btnBack.css" />
+<h2>Empleados</h2>
+<div class="row">
+
+    <p class="col-md-4">
+
+        <button class="btn-back" onclick="back()">
+            <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+            <span>Ir a inicio</span>
+        </button>
+    </p>
+
+    <div class="col-md-6">
+        <button class="btn btn-success" onclick="viewLay()">Layout</button>
+    </div>
+</div>
+
+<section>
+    <div id="partial-view-layout"></div>
+</section>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Code.code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Code.Tbl_Place_Diagram.Tbl_Place_Area_.name_area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Code.Tbl_Place_Diagram.Tbl_Place_Subarea.name_subarea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Users.id_employee)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Users.name_employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Users.lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Users.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Users.position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Users.supervisor)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Code.code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Code.Tbl_Place_Diagram.Tbl_Place_Area_.name_area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Code.Tbl_Place_Diagram.Tbl_Place_Subarea.name_subarea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Users.id_employee)
+            </td>
+
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Users.name_employee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Users.lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Users.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Users.position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tbl_Place_Users.supervisor)
+            </td>*@
+            <td>
+                <a href='@Url.Action("JUASview", "Tbl_Place_Diagram")?code=@item.Tbl_Place_Users.id_employee'><img class="img-eye" src="~/Content/visible_eye_5752.png" alt="Ver"></a>
+            </td>
+        </tr>
+    }
+
+</table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var area = "@Html.Raw(ViewBag.area)";
+        var subarea = "@Html.Raw(ViewBag.subarea)";
+        var piso_snk = "@Html.Raw(ViewBag.piso_snk)";
+        var model = @Html.Raw(Json.Encode(ViewBag.ModelJson));
+
+        model = JSON.parse(model);
+        console.log(area, subarea, piso_snk);
+        function viewLay() {
+
+            var url = '@Url.Action("editAdmin", "Tbl_Place_Diagram")?area=' + encodeURIComponent(area) + '&subarea=' + encodeURIComponent(subarea) + '&piso_snk=' + encodeURIComponent(piso_snk)+ '&viewTicket='+'True';
+            //$('#partial-view-layout').load(url);
+            window.location.href = url;
+        }
+
+        function back() {
+            let url = '@Url.Action("Index", "Home")';
+            window.location.href = url;
+        }
+        if (model.length === 0) {
+            alert('No hay empleados registrados actualmente');
+        }
+
+
+    </script>
+}
+<style>
+    .img-eye {
+        vertical-align: middle;
+        margin-right: 5px;
+        width: 25px;
+        height: 25px;
+    }
+</style>

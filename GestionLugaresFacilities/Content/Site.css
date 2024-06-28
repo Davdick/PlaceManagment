@@ -1,0 +1,190 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.find-area-d {
+    margin-top: 40px;
+    border-radius: 25px;
+    /*background: linear-gradient(145deg, #5e6c62, #6f8075);*/
+    background: #ffffff;
+    border: 1px solid #ddd;
+}
+
+    .find-area-d section {
+        text-align: center;
+        border-radius: 50px;
+        background: #3c3d44;
+        /*box-shadow: 20px 20px 50px #33343a, -20px -20px 50px #45464e;*/
+        margin-left: 53px;
+        width: 90%;
+    }
+
+        .find-area-d section h3 {
+            color: white;
+        }
+
+.tbl-index-area {
+    display: flex;
+    justify-content: center;
+}
+
+    .tbl-index-area td {
+        margin-left: 20px;
+        margin-right: 10px;
+        height: 90px;
+        width: auto;
+    }
+
+
+
+
+.inputboxx {
+    position: relative;
+    width: 196px;
+    margin-bottom: 15px;
+}
+
+    .inputboxx input {
+        position: relative;
+        width: 100%;
+        padding: 20px 10px 10px;
+        background: transparent;
+        outline: none;
+        box-shadow: none;
+        border: none;
+        color: #23242a;
+        font-size: 1em;
+        letter-spacing: 0.05em;
+        transition: 0.5s;
+        z-index: 10;
+    }
+
+    .inputboxx span {
+        position: absolute;
+        left: 0;
+        padding: 20px 10px 10px;
+        font-size: 1em;
+        color: #8f8f8f;
+        letter-spacing: 00.05em;
+        transition: 0.5s;
+        pointer-events: none;
+    }
+
+    .inputboxx input:valid ~ span,
+    .inputboxx input:focus ~ span {
+        color: #45f3ff;
+        transform: translateX(-10px) translateY(-34px);
+        font-size: 0,75em;
+    }
+
+    .inputboxx i {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background: #45f3ff;
+        border-radius: 4px;
+        transition: 0.5s;
+        pointer-events: none;
+        z-index: 9;
+    }
+
+    .inputboxx input:valid ~ i,
+    .inputboxx input:focus ~ i {
+        height: 44px;
+    }
+
+.search__btn {
+    border: none;
+    cursor: pointer;
+    background-color: rgba(42, 42, 45, 1);
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    height: 100%;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+    .search__btn:hover {
+        background-color: rgba(54, 54, 56, 1);
+    }
+
+
+
+.cta {
+    border: none;
+    background: none;
+}
+
+    .cta span {
+        padding-bottom: 7px;
+        letter-spacing: 4px;
+        font-size: 14px;
+        padding-right: 15px;
+        text-transform: uppercase;
+    }
+
+    .cta svg {
+        transform: translateX(-8px);
+        transition: all 0.3s ease;
+        color: white;
+    }
+
+    .cta:hover svg {
+        transform: translateX(0);
+    }
+
+    .cta:active svg {
+        transform: scale(0.9);
+    }
+
+.hover-underline-animation {
+    position: relative;
+    color: black;
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+
+    .hover-underline-animation:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #000000;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+    }
+
+.cta:hover .hover-underline-animation:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}

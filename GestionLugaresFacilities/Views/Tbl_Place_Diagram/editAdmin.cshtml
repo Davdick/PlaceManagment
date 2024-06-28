@@ -1,0 +1,1448 @@
+﻿@model GestionLugaresFacilities.Models.Tbl_Place_Diagram
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<link rel="stylesheet" href="~/Content/btnBack.css" />
+<link rel="stylesheet" href="~/Content/btnDownload.css" />
+
+<div>
+    <hr />
+    @if (ViewBag.back != false & ViewBag.backTicket ==false)
+    {
+        @*@Html.ActionLink("Regresar", "Index", new { area = Model.Area.name_area, subarea = Model.Subarea.name_subarea, piso_snk = Model.piso_snorkel }, null)*@
+        <button class="btn-back" onclick="backDiagramsIndex()">
+            <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+            <span>Regresar</span>
+        </button>
+    }
+    else
+    {
+        
+       if (ViewBag.subarea != "NA")
+       {
+        @Html.ActionLink("Ver lista de empleados", "Index", "Tbl_Place_Assignment", new { area = ViewBag.area, subarea = ViewBag.subarea, piso_snk = ViewBag.piso_snk }, new { @class = "btn btn-primary" })
+       }
+       else
+       {
+        @Html.ActionLink("Ver lista de empleados", "Index", "Tbl_Place_Assignment", new { area = ViewBag.area, piso_snk = ViewBag.piso_snk, @class = "btn btn-info" }, new { @class = "btn btn-primary" })
+       }
+        <br />
+    }
+    @if (ViewBag.backTicket != false)
+    {   
+        <br />
+        @Html.ActionLink("Regresar", "Index", "Tbl_Place_Assignment", new { area = ViewBag.area, piso_snk = ViewBag.piso_snk, @class = "btn btn-info" }, new { @class = "btn btn-info" })
+        <br />
+    }
+    <br />
+
+    <section class="titlesDiagram">
+        <div class="titlesDiagram-titles">
+            <div>
+                <label for="disponibles">Area:</label>
+                <p>@Model.Tbl_Place_Area_.name_area</p>
+            </div>
+            <div>
+                <label for="noDisponibles">Subarea:</label>
+                <p>@ViewBag.subarea</p>
+            </div>
+            <div>
+                <label for="total">Piso o snorkel:</label>
+                <p>@Model.piso_snorkel</p>
+            </div>
+
+        </div>
+
+        <div class="info-diagram">
+            <div>
+                <label for="disponibles">Lugares disponibles:</label>
+                <input type="text" size="2" id="disponibles" disabled /> |
+            </div>
+            <div>
+                <label for="noDisponibles">Lugares ocupados:</label>
+                <input type="text" size="2" id="noDisponibles" disabled /> |
+            </div>
+            <div>
+                <label for="total">Lugares totales:</label>
+                <input type="text" size="2" id="total" disabled />
+            </div>
+
+        </div>
+    </section>
+
+    <br />
+
+    <div class="row">
+        @*<button class="btn btn-info" onclick="addRow()">Agregar fila</button>
+            <button class="btn btn-info" onclick="addCol()">Agregar columna</button>*@
+        
+        @if (Settings.LoggedUser.Rol == 1 || Settings.LoggedUser.Rol == 2)
+        {
+            <div class="col-md-4">
+                <button class="btnjk" onclick="dwnExcel()">
+                    <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" id="bdd05811-e15d-428c-bb53-8661459f9307" data-name="Layer 2" class="svg"><path d="M17.5,22.131a1.249,1.249,0,0,1-1.25-1.25V2.187a1.25,1.25,0,0,1,2.5,0V20.881A1.25,1.25,0,0,1,17.5,22.131Z"></path><path d="M17.5,22.693a3.189,3.189,0,0,1-2.262-.936L8.487,15.006a1.249,1.249,0,0,1,1.767-1.767l6.751,6.751a.7.7,0,0,0,.99,0l6.751-6.751a1.25,1.25,0,0,1,1.768,1.767l-6.752,6.751A3.191,3.191,0,0,1,17.5,22.693Z"></path><path d="M31.436,34.063H3.564A3.318,3.318,0,0,1,.25,30.749V22.011a1.25,1.25,0,0,1,2.5,0v8.738a.815.815,0,0,0,.814.814H31.436a.815.815,0,0,0,.814-.814V22.011a1.25,1.25,0,1,1,2.5,0v8.738A3.318,3.318,0,0,1,31.436,34.063Z"></path></svg></span>
+                    Descargar excel
+                </button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary" onclick="addRow()">Agregar fila</button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary" onclick="addCol()">Agregar columna</button>
+            </div>
+        }
+       
+        
+
+    </div>
+    <h2>Mapa</h2>
+    <!-- modal codes -->
+    @if (Settings.LoggedUser.Rol == 1 || Settings.LoggedUser.Rol == 2)
+    {
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Agregar codigo</h2>
+                <form id="formDiagram">
+                    <div class="form-group">
+                        <input type="hidden" id="id_diagram" name="id_diagram" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="data_coord" name="data_coord" />
+                    </div>
+                    <div class="form-group">
+                        <label for="code1">Codigo</label>
+                        <input type="text" id="code1" name="code" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="data_time" name="data_time" />
+                    </div>
+                    <div class="form-group">
+                        <label for="type_place">Tipo lugar</label>
+                        @*<input type="text" id="type_place" name="type_place" />*@
+                        <select class="form-control" id="type_place" name="type_place">
+                            <option value="">Selecciona una opción</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="chair_code">Codigo silla</label>
+                        <input type="text" id="chair_code" name="chair_code" required />
+                    </div>
+                    <input class="btn btn-success" type="submit" value="Guardar" id="enviarFormulario" />
+
+                </form>
+                <br />
+                @if (Settings.LoggedUser.Rol == 1 || Settings.LoggedUser.Rol == 2)
+                {
+                    <button class="btn btn-danger" id="btn-remove-cell" onclick="deleteCell()">Eliminar area</button>
+                }
+
+
+            </div>
+        </div>
+    }
+
+    <!-- modal assignment -->
+    <div id="myModal2" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            @if (Settings.LoggedUser.Rol == 1 || Settings.LoggedUser.Rol == 2)
+            {
+                <h2>Agregar empleado</h2>
+                <input id="show-code-emp" type="text" disabled />
+                <br />
+                <button class="btn btn-primary" onclick="editCode()">Editar</button> 
+                <button class="btn btn-danger" onclick="deleteCode()">Deshabilitar</button>
+                <br />
+            }
+            else
+            {
+                <h2>Ticket place</h2>
+            }
+            @{
+                string form = "formDiagramUser";
+                if (Settings.LoggedUser.Rol == 1 || Settings.LoggedUser.Rol == 2)
+                {
+                     form = "formDiagramAdmin";
+                }
+                
+
+
+            }
+
+            <form id="@form">
+                <div>
+                    <input type="hidden" id="idcode1" name="id_code" />
+                    <label for="search-input">ID empleado</label>
+                    <div class="col-md-10">
+                        <!-- Agrega un campo de entrada para que el usuario pueda escribir su consulta -->
+                        <input type="text" id="search-input" placeholder="Consulta id" required>
+                        <!-- Agrega el elemento select donde se cargarán las opciones -->
+                        <select class="form-control" id="id_user" name="id_user"></select>
+                    </div>
+                    <br />
+                </div>
+               
+                @if (Settings.LoggedUser.Rol == 1 || Settings.LoggedUser.Rol == 2)
+                {
+                    <br />
+                    <input type="submit" class="btn btn-success" value="Agregar" id="enviarFormularioUser" />
+                }
+                else
+                {
+                    <input type="submit" class="btn btn-success" value="Enviar" id="enviarFormularioUser" />
+                }
+
+            </form>
+        </div>
+    </div>
+    <!--modal users-->
+    <div id="myModalUsers" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Usuario</h2>
+            @if (Settings.LoggedUser.Rol == 1 || Settings.LoggedUser.Rol == 2)
+            {
+                <button class="btn btn-danger" onclick="deleteAssing()">Quitar empleado</button>
+            }
+            
+            <div class="container-datas">
+                <div>
+                    <input type="hidden" id="idassign" />
+                    <label for="code">Codigo</label>
+                    <input id="code" type="text" disabled />
+
+                    <label for="place">Lugar</label>
+                    <input id="place" type="text" disabled />
+
+                    <label for="codechair">Codigo de silla</label>
+                    <input id="codechair" type="text" disabled />
+                </div>
+                <div>
+                    <label for="idemp">ID empleado</label>
+                    <input id="idemp" type="text" disabled />
+
+                    <label for="nemp">Nombre empleado</label>
+                    <input id="nemp" type="text" disabled />
+
+                    @*<label for="lastn">Apellido</label>
+                    <input id="lastn" type="text" disabled />*@
+                </div>
+                <div>
+                    <label for="ibt">IBT</label>
+                    <input id="ibt" type="text" disabled />
+
+                    <label for="email">Email</label>
+                    <input id="email" type="text" disabled />
+
+                    @*<label for="position">Posicion</label>
+                    <input id="position" type="text" disabled />*@
+
+                    <label for="sup">Supervisor</label>
+                    <input id="sup" type="text" disabled />
+
+                </div>
+                <div>
+                    <img width="100" class="img-responsive img-rounded" id="imagenApi" src="" alt="Imagen desde API">
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+    @*<div>
+        <img src="~/Content/mapaPlanta.png" />
+    </div>*@
+    <br />
+    <div class="table-responsive row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"style="display:none;" id="loadingtable">
+            <img src="~/Content/load-34_256.gif"/>
+        </div>
+        <div class="col-md-4"></div>
+        <table id="tableDiagram"class="tblView">
+            @for (int i = 0; i < @ViewBag.size_x; i++)
+            {
+
+
+                <tr>
+                    @for (int j = 0; j < @ViewBag.size_y; j++)
+                {
+                        @*<td data-coord="{x:@i, y:@j}">X: i  Y:@j</td>*@
+                        <td data-coord="@(String.Format("{{\"x\":{0}, \"y\":{1}}}",i,j))"></td>
+                    }
+
+
+                </tr>
+            }
+        </table>
+    </div>
+    
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+  <script>
+    const SettingsRole = "@Settings.LoggedUser.Rol";
+    var limitX = @ViewBag.size_x;
+    var limitY = @ViewBag.size_y;
+    var data_info = @Html.Raw(ViewBag.data_infos);
+    var coords_reg =@Html.Raw(Json.Encode(ViewBag.data_coord));
+    var code1 =@Html.Raw(Json.Encode(ViewBag.codes1));
+    var id_codes = @Html.Raw(Json.Encode(ViewBag.codes_id));
+        const id_diagram = @Model.id_diagram;
+        var disponible = 0;
+        var inUse = 0;
+        var contCodes = 1;
+
+       // console.log("codes"), code1;
+
+        // Mostrar el elemento de carga al inicio
+        $('#loadingtable').show();
+
+        // Código para cargar la tabla (ejemplo)
+        // Aquí puedes agregar tu lógica para cargar la tabla
+
+        // Ocultar el elemento de carga una vez que todo el contenido de la página esté cargado
+        $(window).on('load', function () {
+            $('#loadingtable').hide();
+        });
+    // Crear un nuevo array para almacenar los resultados
+    var resDatac = [];
+    var resCodeN = [];
+    // Recorrer el array original y extraer las propiedades "x" e "y" de cada objeto
+    coords_reg.forEach(function (item) {
+        var dataCObj = JSON.parse(item.dataC);
+        //var codeNobj =item.codeN;
+        resDatac.push({ x: dataCObj.x, y: dataCObj.y });
+        resCodeN.push({ obj: item.codeN});
+    });
+
+
+    data_info = JSON.parse(data_info);
+
+    //console.log("todos los xy",data_info);
+    $(document).ready(function () {
+        //recorre cada item del td
+        $.each($('table td'), function (i, item) {
+            // se obtienen sus atributos y se parsea
+
+            var data = $(item).attr('data-coord');
+            var dataCoord = JSON.parse(data);
+
+            for (let j = 0; j < data_info.length; j++){
+                if (dataCoord.x == data_info[j].x && dataCoord.y == data_info[j].y){
+                   // console.log("encontrado para pintar lugares", data_info[j]);
+                    $(item).css('background', '#908484');
+                    $(item).html('');
+                    item.classList.add('follow');
+                    $(item).css('cursor', 'pointer');
+                    $(item).hover(function () {
+                        $(this).css("border", "1px solid black");
+                    }, function () {
+                        $(this).css("border", "none");
+                    });
+
+                    //agregar funcion y modal
+                    addFunction();
+
+
+                } else {
+                    //console.log("no");
+
+                }
+            }
+
+
+        });
+        lock();
+        //  PINTAR LOS LUGARES YA CON CODIGOS
+        function lock() {
+            $.each($('table td'), function (i, item) {
+                // se obtienen sus atributos y se parsea
+
+                var data = $(item).attr('data-coord');
+                var dataCoord = JSON.parse(data);
+                //coords_reg = JSON.stringify(coords_reg);
+                //debugger
+                for (let j = 0; j < resDatac.length; j++){
+                    if (dataCoord.x == resDatac[j].x && dataCoord.y == resDatac[j].y) {
+                        //resCodeN[j]
+                        item.setAttribute("idcode", id_codes[j].id);
+                       // document.getElementById("idcode1").value = id_codes[j].id;
+                        $(item).css('background', '#5db75c');
+                        $(item).hover(function () {
+                            $(this).css("border", "1px solid black");
+                        }, function () {
+                            $(this).css("border", "none");
+                        });
+                        //code1[j].codeDat = JSON.stringify(code1[j].codeDat);
+                        //document.getElementById('show-code-emp').value = code1[j].codeDat;
+                        item.setAttribute("code-green", code1[j].codeDat);
+
+                        //code1[j].typePlace = JSON.stringify(code1[j].typePlace)
+                        $(item).html(code1[j].codeDat);
+
+
+                       // AQUI ESTA LO DEL SELECT TIPO DE LUGAR
+
+                        switch (code1[j].typePlace) {
+                            //case 1:
+                            //    $(item).attr('rowspan', 2).attr('colspan', 5);
+                            //    break;
+                            //case 2:
+                            //    $(item).attr('rowspan', 2).attr('colspan', 1);
+                            //    break;
+                            case 3:
+                                $(item).attr('rowspan', 2).attr('colspan', 1);
+                                //hideLastTr(3,item);
+                                break;
+                            case 4:
+                                $(item).attr('rowspan', 2).attr('colspan', 2);
+                                //hideLastTr(item);
+                                break;
+                            case 5:
+                                $(item).attr('rowspan', 5).attr('colspan', 2);
+                               // hideLastTr(item);
+                                break;
+                            case 6:
+                                $(item).attr('rowspan', 1).attr('colspan', 2);
+                               // hideLastTr(item);
+                                break;
+                            case 7:
+                                $(item).attr('rowspan', 2).attr('colspan', 5);
+                                //hideLastTr(item);
+                                break;
+                            case 8:
+                                $(item).attr('rowspan', 2).attr('colspan', 4);
+                              //  hideLastTr(item);
+                                break;
+                            case 9:
+                                $(item).attr('rowspan', 4).attr('colspan', 4);
+                                //hideLastTr(item);
+                                break;
+                            case 10:
+                                $(item).attr('rowspan', 3).attr('colspan', 1);
+                               // hideLastTr(item);
+                                break;
+                            case 11:
+                                $(item).attr('rowspan', 3).attr('colspan', 4);
+                               // hideLastTr(item);
+                                break;
+                            case 12:
+                                $(item).attr('rowspan', 3).attr('colspan', 2);
+                              //  hideLastTr(item);
+                                break;
+                            case 13:
+                                $(item).attr('rowspan', 4).attr('colspan', 2);
+                                break;
+                            default:
+                                // Código por defecto si typePlace no coincide con ningún caso
+                              //  $(item).attr('rowspan', 1).attr('colspan', 1);
+                                break;
+                        }
+
+
+                        $(item).css('cursor', 'pointer');
+                        // En algún momento, quitar el evento onclick actual y agregar uno nuevo
+                        $(item).off('click', addCodes);
+                        $(item).on('click', addUser);
+                       // console.log('encontrado bd');
+                        contCodes++;
+
+                    }
+                }
+
+
+            });
+        }
+        function hideLastTr(caso, item) {
+
+
+            //for (var i = limitY; i < rows.length; i++) {
+            //    rows[i].style.display = 'none';
+            //}
+            // Ocultar las celdas después de la cuarta columna en cada fila
+            // Obtener las dimensiones de las celdas adyacentes
+            var coord = item.getAttribute('data-coord');
+            coord = JSON.parse(coord);
+            switch (caso) {
+                case 3:
+
+                    break;
+            }
+
+        }
+        // PINTAR USERS
+        //PETICION PARA OBTENER DATA COORDS DESDE TABLA ASSIGNMENT
+        $.ajax({
+            url: '/Tbl_Place_Assignment/JUAS',
+            type: 'GET',
+            data: { id: id_diagram },
+            dataType: 'json',
+            success: function (data) {
+                //console.log("users", data);
+                inUse = data.length;
+                document.getElementById('noDisponibles').value = inUse;
+                disponible = resDatac.length - inUse;
+                document.getElementById("disponibles").value = disponible;
+                document.getElementById('total').value = disponible + inUse;
+                paintUsers(data);
+            },
+            error: function () {
+                alert('Error while fetching data');
+            }
+
+        });
+        function paintUsers(datas) {
+
+            $.each($('table td'), function (i, item) {
+                // se obtienen sus atributos y se parsea
+
+                var data = $(item).attr('data-coord');
+                // console.log(data);
+                var dataCoord = JSON.parse(data);
+                //coords_reg = JSON.stringify(coords_reg);
+
+                for (let j = 0; j < datas.length; j++) {
+                    let coordsDC = JSON.parse(datas[j].CodeDataC);
+                   // console.log(coordsDC);
+                    //datas[j].CodeDataC = JSON.parse(datas[j].CodeDataC);
+                    let coordX = coordsDC.x;
+                    let coordY = coordsDC.y;
+                    if (dataCoord.x == coordX && dataCoord.y == coordY) {
+                        //EN LOS DATA COORD QUE COINCIDA CON LAS COORDS DE CODIGO TRAIDAS DEL AJAX PINTAR.
+                        $(item).css('background', '#e53e3e');
+                        $(item).css('cursor', 'pointer');
+                        $(item).html(datas[j].Coden);
+                        //console.log("encontradooo", dataCoord);
+
+                        $(item).off('click', addCodes);
+                        $(item).off('click', addUser);
+
+                        item.setAttribute("id-assign", datas[j].IdAssign);
+                        item.setAttribute("code", datas[j].Coden);
+                        item.setAttribute("place", datas[j].CodeTypeP);
+                        item.setAttribute("code-chair", datas[j].CodeChair);
+                        item.setAttribute("id-employee", datas[j].UserId);
+                        item.setAttribute("name-employee", datas[j].UserName);
+                        item.setAttribute("lastname", datas[j].UserLast);
+                        item.setAttribute("ibt", datas[j].UserIbt);
+                        item.setAttribute("position", datas[j].UserPos);
+                        item.setAttribute("supervisor", datas[j].UserSup);
+                        item.setAttribute("email", datas[j].UserEmail);
+                        $(item).on('click', showUsers);
+                        // Mostrar la modal con datos
+                       // $('#myModalUsers').show();
+                          $(item).on('click', showUsers);
+                    }
+                }
+
+
+            });
+        }
+        function showUsers() {
+            let id_assign = $(this).attr('id-assign');
+            let code = $(this).attr('code');
+            let place = $(this).attr('place');
+            let code_chair = $(this).attr('code-chair');
+            let idemp = $(this).attr('id-employee');
+            let namemp = $(this).attr('name-employee');
+            let lastn = $(this).attr('lastname');
+            let ibt = $(this).attr('ibt');
+            let position = $(this).attr('position');
+            let supervisor = $(this).attr('supervisor');
+            var email = $(this).attr('email');
+            let celda_dataCoord = $(this).attr('data-coord');
+            // API DE FOTOS EMPLEADO
+            var apiUrl = `http://mexico.corp.sensata.com/Utils/API/Employee/GetPhoto/${idemp} `;
+            document.getElementById('imagenApi').src = apiUrl;
+            //document.getElementById("idassign").value = id_assign;
+            //document.getElementById("code").value = code;
+            //document.getElementById("place").value = place;
+            //document.getElementById("codechair").value = code_chair;
+            //document.getElementById("idemp").value = idemp;
+            //document.getElementById("nemp").value = namemp;
+            //document.getElementById("lastn").value = lastn;
+            //document.getElementById("ibt").value = ibt;
+            //document.getElementById("sup").value = supervisor;
+            //document.getElementById("position").value = position;
+            //document.getElementById("email").value = email;
+            //document.getElementById('imagenApi').src = apiUrl;
+
+            $.ajax({
+            url: '@Url.Action("GetApiEmployee", "Tbl_Place_Users")',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                idEmp: idemp
+            },
+            success: function (data) {
+                //console.log(data);
+            document.getElementById("idassign").value = id_assign;
+            document.getElementById("code").value = code;
+            document.getElementById("place").value = place;
+            document.getElementById("codechair").value = code_chair;
+            document.getElementById("idemp").value = data.EmployeeNumber;
+            document.getElementById("nemp").value = data.EmployeeName;
+            //document.getElementById("lastn").value = lastn;
+            document.getElementById("ibt").value = data.IBT;
+            document.getElementById("sup").value = data.SupervisorName;
+           // document.getElementById("position").value = data.position;
+            document.getElementById("email").value = data.EmployeeNumber+"@@sensata.com";
+            
+            },
+            error: function (error) {
+                console.error('Error al obtener datos desde el servidor:', error);
+            }
+        });
+
+            // Mostrar la modal
+            $('#myModalUsers').show();
+        }
+
+        ////PINTAR BORDES
+        //var elms = document.getElementsByClassName("follow");
+        //$(elms).css('border-right', 'solid');
+        //$(elms).css('border-top', 'solid');
+        //$(elms).css('border-left', 'solid');
+        //$(elms).css('border-bottom', 'solid');
+        //primer bucle guarda una posicion del array selectitem
+        let ij = 0;
+        while (ij < data_info.length) {
+            //segundo bucle para comparar una posicion del selectitem con todas las demas posiciones y obtener su posicion de adyacencia
+            for (let j = 0; j < data_info.length; j++) {
+                //debajo
+                // debugger
+                if ((data_info[ij].x + 1) == (data_info[j].x) && data_info[ij].y == data_info[j].y) {
+
+                   // console.log(data_info[j]);
+                   // console.log("esta debajo de ");
+                   // console.log(data_info[ij]);
+
+                    $.each($('table td'), function (f, item) {
+
+                        let coord = $(item).attr('data-coord');
+                        coord = JSON.parse(coord);
+                        // debugger
+                        if (coord.x == data_info[ij].x && coord.y == data_info[ij].y) {
+                           // console.log("encontrado en la vista! under");
+                           // console.log(coord);
+                            $(item).css('border-bottom', 'none');
+
+                        }
+                    });
+                }
+                //arriba
+
+                if ((data_info[ij].x - 1) == (data_info[j].x) && data_info[ij].y == data_info[j].y) {
+                   // console.log(data_info[j]);
+                   // console.log("esta arriba de ");
+                  //  console.log(data_info[ij]);
+
+                    $.each($('table td'), function (f, item) {
+
+                        let coord = $(item).attr('data-coord');
+                        coord = JSON.parse(coord);
+                        // debugger
+                        if (coord.x == data_info[ij].x && coord.y == data_info[ij].y) {
+                           // console.log("encontrado en la vista! top");
+                           // console.log(coord);
+                            $(item).css('border-top', 'none');
+
+
+                        }
+
+                    });
+                }
+                //derecha
+
+                if ((data_info[ij].x) == (data_info[j].x) && (data_info[ij].y + 1) == data_info[j].y) {
+                    //console.log(data_info[j]);
+                   ///console.log("esta a la derecha de ");
+                    //console.log(data_info[ij]);
+
+                    $.each($('table td'), function (f, item) {
+
+                        let coord = $(item).attr('data-coord');
+                        coord = JSON.parse(coord);
+                        // debugger
+                        if (coord.x == data_info[ij].x && coord.y == data_info[ij].y) {
+                           // console.log("encontrado en la vista! top");
+                           // console.log(coord);
+                            $(item).css('border-right', 'none');
+                        }
+
+                    });
+                }
+                //izquierda
+                if ((data_info[ij].x) == (data_info[j].x) && (data_info[ij].y - 1) == data_info[j].y) {
+                   // console.log(data_info[j]);
+                    //console.log("esta a la izquierda de ");
+                    //console.log(data_info[ij]);
+                    //for each para encontrar la coordenada del primer bucle
+                    $.each($('table td'), function (f, item) {
+
+                        let coord = $(item).attr('data-coord');
+                        coord = JSON.parse(coord);
+                        //debugger
+                        if (coord.x == data_info[ij].x && coord.y == data_info[ij].y) {
+                          //  console.log("encontrado en la vista! izq");
+                          //  console.log(coord);
+                            $(item).css('border-left', 'none');
+
+                        }
+                    });
+
+                }
+            }
+            ij++;
+           // paintBorders();
+        }
+        function paintBorders() {
+
+            $.each($('.tblView td'), function (i, item) {
+
+                var data = $(item).attr('data-coord');
+                var jsonData = JSON.parse(data);
+
+                let a = jsonData.x;
+                let b = jsonData.y;
+
+                $(item).css('border-right', 'none');
+                $(item).css('border-top', 'none');
+                $(item).css('border-left', 'none');
+                $(item).css('border-bottom', 'none');
+
+                // arriba izquierda
+                if (a == 0 && b == 0) {
+                    $(item).css('border-left', 'solid');
+                    $(item).css('border-top', 'solid');
+                }
+
+                //arriba derecha
+                if (a == 0 && b == limitY - 1) {
+                    $(item).css('border-right', 'solid');
+                    $(item).css('border-top', 'solid');
+                }
+
+                //abajo izquierda
+                if (a == limitX - 1 && b == 0) {
+                    $(item).css('border-left', 'solid');
+                    $(item).css('border-bottom', 'solid');
+                }
+
+                //abajo derecha
+                if (a == limitX - 1 && b == limitY - 1) {
+                    $(item).css('border-right', 'solid');
+                    $(item).css('border-bottom', 'solid');
+                }
+
+                //lateral arriba
+                if (a == 0 && b >= 1 && b < (limitY - 1)) {
+                    $(item).css('border-top', 'solid');
+                }
+
+                //lateral abajo
+                if (a == (limitX - 1) && b >= 1 && b < (limitY - 1)) {
+                    $(item).css('border-bottom', 'solid');
+                }
+
+                //lateral derecha
+                if (a >= 1 && a < (limitX - 1) && b == (limitY - 1)) {
+                    $(item).css('border-right', 'solid');
+                }
+
+                //lateral izquierda
+                if (a >= 1 && a < (limitX - 1) && b == 0) {
+                    $(item).css('border-left', 'solid');
+                }
+
+            });
+
+        }
+
+    });
+        var coordajx;
+
+    function addCodes() {
+        coordajx = $(this).attr('data-coord');
+        //console.log(coordajx);
+        var subarea = '@ViewBag.subarea';
+        var autoCode = addAutoCodes('@Model.Tbl_Place_Area_.name_area',subarea, '@Model.piso_snorkel', contCodes);
+        @*
+        if ('@Model.Subarea.name_subarea' != "" || '@Model.Subarea.name_subarea' != null || '@Model.Subarea.name_subarea' != undefined){
+            subarea = '@Model.Subarea.name_subarea';
+        }*@
+
+        @*try {
+             autoCode = addAutoCodes('@Model.Area.name_area','@Model.Subarea.name_subarea', '@Model.piso_snorkel', contCodes);
+        }
+        catch (e){
+             autoCode = addAutoCodes('@Model.Area.name_area',subarea, '@Model.piso_snorkel', contCodes);
+        }*@
+
+           //$(this).prop('autoCode', autoCode);
+             $('#code1').val(autoCode);
+
+           //console.log(autoCode);
+        // Mostrar la modal
+        $('#myModal').show();
+        //// Obtenemos una referencia al elemento por su clase
+        //$('.follow').on('click', function () {
+
+        //});
+        debugger
+    }
+    function addFunction() {
+        // Agregar el evento click a '.follow'
+        $('.follow').on('click', addCodes);
+
+
+    }
+
+    function addUser() {
+//        alert('Ya hay codigo registrado');
+        $('#myModal2').show();
+
+        let dataCOORD = $(this).attr('data-coord');
+        dataCOORD = JSON.parse(dataCOORD);
+        dataCOORD = JSON.stringify(dataCOORD);
+       // console.log('data coord select',dataCOORD);
+       // console.log('id diagram', id_diagram);
+        let id = $(this).attr('idcode');
+        let code = $(this).attr('code-green');
+       // console.log("value",id);
+        $('#idcode1').val(id);
+        $('#show-code-emp').val(code);
+        getIdCode(dataCOORD, id_diagram);
+    }
+
+    function getIdCode(data, id) {
+        var $select = $('#id_code');
+             $.ajax({
+            url: '@Url.Action("GetCodeList", "Tbl_Place_Code")',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                id_d: id,
+                d_coord: data
+            },
+            success: function (data) {
+               // console.log('Respuesta del servidor ID code:', data);
+                if (data.length > 0) {
+                    // Si recibes datos, selecciona el primer objeto y obtén su valor
+                    var value = data[0].Value;
+                    // Asigna el valor al elemento select
+                    $select.val(value);
+                }
+            },
+            error: function (error) {
+                console.error('Error en la petición:', error);
+            }
+    });
+    }
+    // Cerrar la modal cuando se hace clic en el elemento que cierra
+    $('.close').on('click', function () {
+        $('#myModal').hide();
+    });
+    $('.close').on('click', function () {
+        $('#myModal2').hide();
+        $('#myModalUsers').hide()
+    });
+    // Cerrar la modal cuando se hace clic fuera de la modal
+    $(window).on('click', function (event) {
+        if (event.target.id === 'myModal') {
+            $('#myModal').hide();
+        }
+        if (event.target.id === 'myModal2') {
+            $('#myModal2').hide();
+        }
+        if (event.target.id === 'myModalUsers') {
+            $('#myModalUsers').hide();
+        }
+    });
+
+    //fecha actual
+    function dateNow() {
+        // Obtener la fecha actual
+        const today = new Date();
+
+        // Obtener los componentes de la fecha (año, mes y día)
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+
+        // Formatear la fecha en el formato para SQL
+        const formattedDate = `${year}-${month}-${day}`;
+
+        return formattedDate;
+
+    }
+    function deleteAssing() {
+        // Obtener el valor del input
+        var inputValue = document.getElementById("idassign").value;
+
+        // Construir el enlace con el valor del input
+        var actionLink = "/Tbl_Place_Assignment/Delete/" + inputValue;
+
+        // Redirigir al usuario a la página con el enlace construido
+        window.location.href = actionLink;
+
+    }
+      function deleteCode() {
+
+          var resultado = window.confirm('Estas seguro?');
+          if (resultado === true) {
+              // Ejecutar si el usuario hace clic en "OK"
+              var inputValueC = document.getElementById("idcode1").value;
+              let actionLink = "/Tbl_Place_Code/Delete/" + inputValueC;
+              window.location.href = actionLink;
+          } else {
+
+          }
+
+
+
+
+
+    }
+      function deleteCell(){
+
+          var celda = coordajx;
+          //console.log(celda)
+          //let actionLink = "/Tbl_Place_Diagram/RemoveCell/" + celda;
+          var response = window.confirm('Estas seguro?');
+          if (response === true) {
+                 // Realizar la petición AJAX
+        $.ajax({
+            url: '@Url.Action("RemoveCell", "Tbl_Place_Diagram")', // Cambia esto según tu configuración de rutas
+            type: 'POST',
+            data: {
+                idDiagram: id_diagram,
+                data: celda
+            },
+            success: function (data) {
+                // Manejar la respuesta si es necesario
+               // console.log("Petición POST exitosa", data);
+                location.reload();
+            },
+            error: function (error) {
+                // Manejar errores si es necesario
+                console.error("Error en la petición POST");
+            }
+        });
+          }
+
+      }
+
+    function dwnExcel() {
+
+        let actionLink = "/Tbl_Place_Diagram/DownloadExcel/" + id_diagram;
+            window.location.href = actionLink;
+        }
+
+    //
+
+
+
+    function mostrarCargando() {
+        // Bloquear la página y mostrar el cursor de carga
+        $("body").addClass("loading");
+    }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //////// ADD ROWS AND COLS, DELETE /////////////////
+
+      function addRow() {
+          var sizeX = '@ViewBag.size_x';
+
+            var list = [];
+            // bucle que recorre las filas hasta el limite de columnas
+            for (let i = 0; i < sizeX; i++) {
+                //mapea las coordenadas convierte el json en string
+                list.push({ x: sizeX, y: i });
+            }
+           // list = JSON.parse(list);
+            list = JSON.stringify(list);
+            console.log("Nueva fila", list);
+            sizeX = parseInt(sizeX) + 1;
+
+            $.ajax({
+                url: '/Tbl_Place_Diagram/AddCells',
+                type: 'POST',
+                data: {
+                    idDiagram: id_diagram,
+                    data: list,
+                    limitX: sizeX,
+                    limitY: null
+                },
+                success: function (response) {
+                    // Manejar la respuesta del servidor
+                    //console.log('Respuesta del servidor:', response);
+                    alert("Fila agregada!!");
+                    location.reload();
+                },
+                error: function (error) {
+                    // Manejar el error en caso de que ocurra
+                    console.error('Error en la petición:', error);
+                }
+            });
+
+        }
+        // add cols
+        function addCol() {
+            var sizeY = '@ViewBag.size_y';
+            var list = [];
+
+
+            // bucle for each que obtiene todos los elementos dentro del tr
+            $.each($('table tr'), function (i, item) {
+                //mapea las coordenadas convierte el json en string
+                list.push({ x: i, y: sizeY});
+            });
+
+            list = JSON.stringify(list);
+            sizeY = parseInt(sizeY)+1;
+            console.log("Nueva col", list, "sizeY", sizeY);
+            $.ajax({
+                url: '/Tbl_Place_Diagram/AddCells',
+                type: 'POST',
+                data: {
+                    idDiagram: id_diagram,
+                    data: list,
+                    limitX: null,
+                    limitY: sizeY
+                },
+                success: function (response) {
+                    // Manejar la respuesta del servidor
+                    //console.log('Respuesta del servidor:', response);
+                    alert("Columna agregada!!");
+                    location.reload();
+                },
+                error: function (error) {
+                    // Manejar el error en caso de que ocurra
+                    console.error('Error en la petición:', error);
+                }
+            });
+
+        }
+        function addAutoCodes(area, subarea, fl_snk, i) {
+            var autoCode;
+            switch (area){
+                case 'Central Building 1':
+                    autoCode = "CB1" + "-" + "F" + fl_snk + "-" + i;
+                    break;
+                case 'Central Building 2':
+                    autoCode = "CB2" + "-" + "F" + fl_snk + "-" + i;
+                    break;
+                case 'Planta Manufactura AGS':
+                    autoCode = "SNK" + fl_snk + "-" + subarea + "-" + i
+                    break;
+                default:
+                    autoCode = "NA";
+            }
+            return autoCode;
+
+
+        }
+        function backDiagramsIndex() {
+            let url = '@Url.Action("Index", "Tbl_Place_Diagram")';
+            window.location = url;
+        }
+        function editCode() {
+            $('#show-code-emp').prop('disabled', false);
+
+
+            if ($('#save-code').length === 0) {
+                var nuevoBoton = $('<button>', {
+                    id: 'save-code',
+                    class: 'btn btn-primary',
+                    onclick: 'saveCode()',
+                    text: 'Guardar'
+                });
+
+                // Agregar el botón debajo del input
+                $('#show-code-emp').after(nuevoBoton);
+            } else {
+                // Alternar la visibilidad del botón
+                $('#save-code').toggle();
+            }
+        }
+        function saveCode() {
+            var id = document.getElementById('idcode1').value;
+            var newCode = document.getElementById('show-code-emp').value;
+            @*let url = '@Url.Action("UpdateCode", "Tbl_Place_Code")'+"?idCode="+id+"&code="+newCode;
+            window.location = url;*@
+
+            $.ajax({
+                url: '@Url.Action("UpdateCode", "Tbl_Place_Code")',
+                type: 'POST', // Método HTTP: GET, POST, PUT, DELETE, etc.
+                data: {
+                    idCode: id,   // Valores de los parámetros
+                    code: newCode
+                },
+                dataType: 'json', // Tipo de datos esperado del servidor
+                success: function(response) {
+                // Manejar la respuesta exitosa del servidor
+                    console.log('Respuesta exitosa:', response);
+                    location.reload();
+                },
+                error: function(error) {
+                // Manejar el error
+                console.error('Error en la solicitud:', error);
+                }
+            });
+
+        }
+
+
+        $.ajax({
+            url: '@Url.Action("GetTypePlaceList", "Tbl_Place_Diagram")', // URL de tu acción en el controlador que devuelve los datos
+            type: 'GET',
+            success: function (data) {
+                // Limpiar el select
+               $('#type_place').empty();
+                // Iterar sobre los datos y agregar opciones al select
+                $.each(data, function (index, item) {
+                    $('#type_place').append($('<option>', {
+                        value: item.Value,
+                        text: item.Text
+                    }));
+                });
+            },
+            error: function (error) {
+                console.error('Error en la petición AJAX:', error);
+            }
+        });
+
+
+        //////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////
+
+//enviar POST
+$('#formDiagram').submit(function (event) {
+
+    event.preventDefault();
+    mostrarCargando(); // Mostrar el estado de carga
+
+    //parsear a json para tener un formato correcto
+    coordajx = JSON.parse(coordajx);
+    //parsear a string para guardar en bd
+    coordajx = JSON.stringify(coordajx);
+    let date = dateNow();
+    $('#id_diagram').val(@Model.id_diagram);
+    $('#data_coord').val(coordajx);
+    $('#date_time').val(date);
+    // Obtener los datos del formulario usando FormData
+    var formData = new FormData(this);
+
+    // Realizar la petición AJAX con los datos del formulario
+    $.ajax({
+        url: '@Url.Action("Create", "Tbl_Place_Code")',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            // Manejar la respuesta del servidor
+            console.log('Respuesta del servidor:', response);
+            alert("Registrado!");
+            $('#myModal').hide();
+            // Limpiar los inputs después de enviar el formulario
+            $('#formDiagram').trigger("reset");
+            $("body").removeClass("loading");
+            location.reload();
+        },
+        error: function (error) {
+            // Manejar el error en caso de que ocurra
+            console.error('Error en la petición:', error);
+            alert("Error! Intenta nuevamente");
+            $("body").removeClass("loading");
+        }
+    });
+    });
+
+    //POST DE SELECT ITEMS USER
+        // Capturar el campo de entrada
+    var $searchInput = $('#search-input');
+    // Obtener el elemento select
+    var $select = $('#id_user');
+
+    // Evento para detectar cambios en el campo de entrada
+    $searchInput.on('input', function () {
+        var query = $(this).val(); // Obtener el valor ingresado por el usuario
+        // Obtener datos desde el controlador y cargarlos en el select
+        $.ajax({
+            url: '@Url.Action("GetUserList", "Tbl_Place_Assignment")',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                txt: query  // Pasar el valor ingresado por el usuario como parámetro
+            },
+            success: function (data) {
+                // Limpiar opciones existentes
+                $select.empty();
+
+                // Agregar las nuevas opciones desde los datos recibidos
+                $.each(data, function (index, item) {
+                    $select.append($('<option>', {
+                        value: item.Value,
+                        text: item.Text
+                    }));
+                });
+            },
+            error: function (error) {
+                console.error('Error al obtener datos desde el servidor:', error);
+            }
+        });
+
+    });
+    //POST A ASSIGNMENT
+
+    $('#formDiagramAdmin').submit(function (event) {
+    event.preventDefault();
+    mostrarCargando(); // Mostrar el estado de carga
+
+
+
+
+    // Obtener los datos del formulario usando FormData
+   var formData = new FormData(this);
+
+
+    //console.log(formData);
+    // Realizar la petición AJAX con los datos del formulario
+
+      $.ajax({
+
+          url: '@Url.Action("Create", "Tbl_Place_Assignment")',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+              // Manejar la respuesta del servidor
+              console.log('Respuesta del servidor:', response);
+              alert("Registrado!");
+            $("body").removeClass("loading");
+            $('#myModal2').hide();
+            // Limpiar los inputs después de enviar el ifrmulario
+            $('#formDiagramAdmin').trigger("reset");
+
+              location.reload();
+          },
+        error: function (error) {
+              // Manejar el error en caso de que ocurra
+              console.error('Error en la petición:', error);
+              alert("Error! Intenta nuevamente");
+            $("body").removeClass("loading");
+          }
+    });
+          });
+
+
+
+
+          $('#formDiagramUser').submit(function (event) {
+    event.preventDefault();
+    mostrarCargando(); // Mostrar el estado de carga
+
+   var formData = new FormData(this);
+
+
+    console.log(formData);
+    // Realizar la petición AJAX con los datos del formulario
+    $.ajax({
+        url: '@Url.Action("Create", "Tbl_Place_AssignmentRequests")',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            // Manejar la respuesta del servidor
+            console.log('Respuesta del servidor:', response);
+            alert("Peticion enviada, esté antento a su correo!");
+            $("body").removeClass("loading");
+            $('#myModal2').hide();
+            // Limpiar los inputs después de enviar el formulario
+            $('#formDiagramUser').trigger("reset");
+
+            location.reload();
+        },
+        error: function (error) {
+            // Manejar el error en caso de que ocurra
+            console.error('Error en la petición:', error);
+            alert("Error! Intenta nuevamente");
+            $("body").removeClass("loading");
+        }
+    });
+          });
+
+
+
+
+</script>
+@if (Settings.LoggedUser.Rol == 1 || Settings.LoggedUser.Rol == 2)
+{
+    <script src="~/Scripts/AddOneArea.js"></script>
+}
+}
+
+
+<style>
+    td, .fixed-size {
+        width: 65px;
+        height: 65px;
+    }
+
+    table {
+        border: 1px;
+    }
+    .tblView{
+        width:100%;
+    }
+
+    .succes {
+        background: #d9edf7;
+    }
+
+    .unsucces {
+        background-color: white;
+    }
+
+        .unsucces:hover {
+            background-color: #dfe4e7;
+        }
+
+    .nnn:hover {
+        background-color: #dfe4e7;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .close:hover {
+            color: #000;
+        }
+
+    .container-datas {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .container-datas > div {
+            width: 55%;
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+
+    /* Estilo para el cursor de carga */
+    body.loading {
+        cursor: wait !important;
+    }
+
+        /* Estilo para bloquear la página */
+        body.loading::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+    .follow:hover {
+        border: 1px solid black;
+    }
+    /*ESTILOS PARA LOS INPUTS DE TOTAL, DISPONIBLE Y NO DISPONIBLE*/
+    #disponibles {
+        background: rgb(93, 183, 92);
+        color: black;
+        font-size: 20px;
+        border-radius: 10px;
+        width: auto;
+    }
+
+    #noDisponibles {
+        background: rgb(229, 62, 62);
+        color: black;
+        font-size: 20px;
+        border-radius: 10px;
+        width: auto;
+    }
+
+    #total {
+        background: cadetblue;
+        color: black;
+        font-size: 20px;
+        border-radius: 10px;
+        width: auto;
+    }
+    .tblView td.hovered {
+        border: 1px solid #000; /* Cambiar el color y grosor del borde según sea necesario */
+        cursor:pointer;
+    }
+
+    /*TITLES*/
+    .titlesDiagram {
+        font-size: 20px;
+        border-radius: 10px;
+        background: #ffffff;
+        flex-direction: column;
+    }
+
+        .titlesDiagram div {
+            display: flex;
+            align-content: space-between;
+            flex-direction: row;
+        }
+
+    .titlesDiagram-titles div {
+        margin-right: 60px;
+    }
+
+    .info-diagram div {
+        margin-right: 60px;
+    }
+    td{
+        /*width:100%;
+        height:100%;*/
+    }
+</style>

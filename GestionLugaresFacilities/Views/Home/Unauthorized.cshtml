@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Unauthorized</title>
+</head>
+<body>
+
+
+    <div class="una">
+        <img class="imgl" src="https://th.bing.com/th/id/R.da13d2858998c4a729074a3d3d751a77?rik=53QIbKQYlqYBug&riu=http%3a%2f%2fsensatajobs.co.uk%2fimages%2flogo2.png&ehk=%2b%2b4hCU7FfTgrALEh2Znq0RvlGct%2f8qencnUOuMp5q%2bw%3d&risl=&pid=ImgRaw&r=0">
+
+        <div class="error">
+            <div class="errocito">
+                <h1>No Autorizado.</h1>
+                <h3>Usted no está autorizado, por lo tanto no puede acceder al sistema de Facilities.</h3>
+                <br>
+                <br>
+                @Html.ActionLink("Inicio de sesión", "LogIn", "Home", htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+
+
+  
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Sistema de Liberacion</p>
+    </footer>
+
+</body>
+
+</html>
+
+<style>
+    .error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .errocito {
+        color: #000000;
+        background-color: #FFBABA;
+    }
+
+
+    .imgl {
+        width: 300px;
+        height: 80px;
+    }
+</style>

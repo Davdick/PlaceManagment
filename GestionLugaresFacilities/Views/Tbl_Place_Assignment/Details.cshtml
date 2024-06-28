@@ -1,0 +1,68 @@
+﻿@model GestionLugaresFacilities.Models.Tbl_Place_Assignment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<script>
+    var random = "@Model.Tbl_Place_Code.code";
+    console.log(random);
+</script>
+<div>
+    <h4>Assignment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Code.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_Code.code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Users.id_employee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_Users.id_employee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Users.name_employee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_Users.name_employee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Users.lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_Users.lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Users.position)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_Users.position)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Users.supervisor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_Users.supervisor)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_assignment }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,38 @@
+﻿/* Estilo para la tabla con bordes redondeados */
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin-top:15px; 
+    border-radius: 10px; /* Radio de borde para la tabla */
+    overflow: hidden; /* Ocultar contenido que exceda el radio de borde */
+}
+
+
+
+
+/* Estilo para las celdas */
+
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Borde inferior para las filas */
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-radius: 15px; /* Radio de borde para las celdas */
+}
+
+thead {
+    border-bottom: 3px solid #ddd;
+    height: 5rem;
+    border-radius: 20px;
+}
+
+
+
+
+/* Estilo para las cabeceras */
+
+th {
+    background-color: #797777; /* Color de fondo para las cabeceras */
+}

@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbFacilitesSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DbFacilitesSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Tbl_Place_Area_" EntityType="DbFacilitesSystemModel.Tbl_Place_Area_" />
+    <EntitySet Name="Tbl_Place_Assignment" EntityType="DbFacilitesSystemModel.Tbl_Place_Assignment" />
+    <EntitySet Name="Tbl_Place_AssignmentRequests" EntityType="DbFacilitesSystemModel.Tbl_Place_AssignmentRequests" />
+    <EntitySet Name="Tbl_Place_Code" EntityType="DbFacilitesSystemModel.Tbl_Place_Code" />
+    <EntitySet Name="Tbl_Place_Diagram" EntityType="DbFacilitesSystemModel.Tbl_Place_Diagram" />
+    <EntitySet Name="Tbl_Place_Subarea" EntityType="DbFacilitesSystemModel.Tbl_Place_Subarea" />
+    <EntitySet Name="Tbl_Place_TypePlace" EntityType="DbFacilitesSystemModel.Tbl_Place_TypePlace" />
+    <EntitySet Name="Tbl_Place_UserRoles" EntityType="DbFacilitesSystemModel.Tbl_Place_UserRoles" />
+    <EntitySet Name="Tbl_Place_Users" EntityType="DbFacilitesSystemModel.Tbl_Place_Users" />
+    <EntitySet Name="Tbl_Place_UserStatus" EntityType="DbFacilitesSystemModel.Tbl_Place_UserStatus" />
+    <AssociationSet Name="FK_DiagramToArea" Association="DbFacilitesSystemModel.FK_DiagramToArea">
+      <End Role="Tbl_Place_Area_" EntitySet="Tbl_Place_Area_" />
+      <End Role="Tbl_Place_Diagram" EntitySet="Tbl_Place_Diagram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AssignmentoCode" Association="DbFacilitesSystemModel.FK_AssignmentoCode">
+      <End Role="Tbl_Place_Code" EntitySet="Tbl_Place_Code" />
+      <End Role="Tbl_Place_Assignment" EntitySet="Tbl_Place_Assignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AssignmentoUsers" Association="DbFacilitesSystemModel.FK_AssignmentoUsers">
+      <End Role="Tbl_Place_Users" EntitySet="Tbl_Place_Users" />
+      <End Role="Tbl_Place_Assignment" EntitySet="Tbl_Place_Assignment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AssReq_to_Codes" Association="DbFacilitesSystemModel.FK_AssReq_to_Codes">
+      <End Role="Tbl_Place_Code" EntitySet="Tbl_Place_Code" />
+      <End Role="Tbl_Place_AssignmentRequests" EntitySet="Tbl_Place_AssignmentRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AssReq_to_Users" Association="DbFacilitesSystemModel.FK_AssReq_to_Users">
+      <End Role="Tbl_Place_Users" EntitySet="Tbl_Place_Users" />
+      <End Role="Tbl_Place_AssignmentRequests" EntitySet="Tbl_Place_AssignmentRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CodesToDiagram" Association="DbFacilitesSystemModel.FK_CodesToDiagram">
+      <End Role="Tbl_Place_Diagram" EntitySet="Tbl_Place_Diagram" />
+      <End Role="Tbl_Place_Code" EntitySet="Tbl_Place_Code" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Place_Code_type_place" Association="DbFacilitesSystemModel.FK_Tbl_Place_Code_type_place">
+      <End Role="Tbl_Place_TypePlace" EntitySet="Tbl_Place_TypePlace" />
+      <End Role="Tbl_Place_Code" EntitySet="Tbl_Place_Code" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DiagramToSubarea" Association="DbFacilitesSystemModel.FK_DiagramToSubarea">
+      <End Role="Tbl_Place_Subarea" EntitySet="Tbl_Place_Subarea" />
+      <End Role="Tbl_Place_Diagram" EntitySet="Tbl_Place_Diagram" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserToUserRoles" Association="DbFacilitesSystemModel.FK_UserToUserRoles">
+      <End Role="Tbl_Place_UserRoles" EntitySet="Tbl_Place_UserRoles" />
+      <End Role="Tbl_Place_Users" EntitySet="Tbl_Place_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserToStatus" Association="DbFacilitesSystemModel.FK_UserToStatus">
+      <End Role="Tbl_Place_UserStatus" EntitySet="Tbl_Place_UserStatus" />
+      <End Role="Tbl_Place_Users" EntitySet="Tbl_Place_Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Tbl_Place_Area_">
+    <Key>
+      <PropertyRef Name="id_area" />
+    </Key>
+    <Property Name="id_area" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_area" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Place_Diagram" Relationship="DbFacilitesSystemModel.FK_DiagramToArea" FromRole="Tbl_Place_Area_" ToRole="Tbl_Place_Diagram" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_Assignment">
+    <Key>
+      <PropertyRef Name="id_assignment" />
+    </Key>
+    <Property Name="id_assignment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_code" Type="Int32" Nullable="false" />
+    <Property Name="id_user" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tbl_Place_Code" Relationship="DbFacilitesSystemModel.FK_AssignmentoCode" FromRole="Tbl_Place_Assignment" ToRole="Tbl_Place_Code" />
+    <NavigationProperty Name="Tbl_Place_Users" Relationship="DbFacilitesSystemModel.FK_AssignmentoUsers" FromRole="Tbl_Place_Assignment" ToRole="Tbl_Place_Users" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_AssignmentRequests">
+    <Key>
+      <PropertyRef Name="id_assreq" />
+    </Key>
+    <Property Name="id_assreq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_code" Type="Int32" Nullable="false" />
+    <Property Name="id_user" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tbl_Place_Code" Relationship="DbFacilitesSystemModel.FK_AssReq_to_Codes" FromRole="Tbl_Place_AssignmentRequests" ToRole="Tbl_Place_Code" />
+    <NavigationProperty Name="Tbl_Place_Users" Relationship="DbFacilitesSystemModel.FK_AssReq_to_Users" FromRole="Tbl_Place_AssignmentRequests" ToRole="Tbl_Place_Users" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_Code">
+    <Key>
+      <PropertyRef Name="id_code" />
+    </Key>
+    <Property Name="id_code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_diagram" Type="Int32" Nullable="false" />
+    <Property Name="data_coord" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="code" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="date_time" Type="DateTime" Precision="3" />
+    <Property Name="type_place" Type="Int32" />
+    <Property Name="chair_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Place_Assignment" Relationship="DbFacilitesSystemModel.FK_AssignmentoCode" FromRole="Tbl_Place_Code" ToRole="Tbl_Place_Assignment" />
+    <NavigationProperty Name="Tbl_Place_AssignmentRequests" Relationship="DbFacilitesSystemModel.FK_AssReq_to_Codes" FromRole="Tbl_Place_Code" ToRole="Tbl_Place_AssignmentRequests" />
+    <NavigationProperty Name="Tbl_Place_Diagram" Relationship="DbFacilitesSystemModel.FK_CodesToDiagram" FromRole="Tbl_Place_Code" ToRole="Tbl_Place_Diagram" />
+    <NavigationProperty Name="Tbl_Place_TypePlace" Relationship="DbFacilitesSystemModel.FK_Tbl_Place_Code_type_place" FromRole="Tbl_Place_Code" ToRole="Tbl_Place_TypePlace" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_Diagram">
+    <Key>
+      <PropertyRef Name="id_diagram" />
+    </Key>
+    <Property Name="id_diagram" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_area" Type="Int32" Nullable="false" />
+    <Property Name="id_subarea" Type="Int32" />
+    <Property Name="piso_snorkel" Type="Int32" />
+    <Property Name="size_x" Type="Int32" />
+    <Property Name="size_y" Type="Int32" />
+    <Property Name="data_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Place_Area_" Relationship="DbFacilitesSystemModel.FK_DiagramToArea" FromRole="Tbl_Place_Diagram" ToRole="Tbl_Place_Area_" />
+    <NavigationProperty Name="Tbl_Place_Code" Relationship="DbFacilitesSystemModel.FK_CodesToDiagram" FromRole="Tbl_Place_Diagram" ToRole="Tbl_Place_Code" />
+    <NavigationProperty Name="Tbl_Place_Subarea" Relationship="DbFacilitesSystemModel.FK_DiagramToSubarea" FromRole="Tbl_Place_Diagram" ToRole="Tbl_Place_Subarea" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_Subarea">
+    <Key>
+      <PropertyRef Name="id_subarea" />
+    </Key>
+    <Property Name="id_subarea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_subarea" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Place_Diagram" Relationship="DbFacilitesSystemModel.FK_DiagramToSubarea" FromRole="Tbl_Place_Subarea" ToRole="Tbl_Place_Diagram" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_TypePlace">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Place_Code" Relationship="DbFacilitesSystemModel.FK_Tbl_Place_Code_type_place" FromRole="Tbl_Place_TypePlace" ToRole="Tbl_Place_Code" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_UserRoles">
+    <Key>
+      <PropertyRef Name="id_roles" />
+    </Key>
+    <Property Name="id_roles" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="rol" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Place_Users" Relationship="DbFacilitesSystemModel.FK_UserToUserRoles" FromRole="Tbl_Place_UserRoles" ToRole="Tbl_Place_Users" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_Users">
+    <Key>
+      <PropertyRef Name="id_users" />
+    </Key>
+    <Property Name="id_users" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_employee" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="id_rol" Type="Int32" Nullable="false" />
+    <Property Name="id_status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tbl_Place_Assignment" Relationship="DbFacilitesSystemModel.FK_AssignmentoUsers" FromRole="Tbl_Place_Users" ToRole="Tbl_Place_Assignment" />
+    <NavigationProperty Name="Tbl_Place_AssignmentRequests" Relationship="DbFacilitesSystemModel.FK_AssReq_to_Users" FromRole="Tbl_Place_Users" ToRole="Tbl_Place_AssignmentRequests" />
+    <NavigationProperty Name="Tbl_Place_UserRoles" Relationship="DbFacilitesSystemModel.FK_UserToUserRoles" FromRole="Tbl_Place_Users" ToRole="Tbl_Place_UserRoles" />
+    <NavigationProperty Name="Tbl_Place_UserStatus" Relationship="DbFacilitesSystemModel.FK_UserToStatus" FromRole="Tbl_Place_Users" ToRole="Tbl_Place_UserStatus" />
+  </EntityType>
+  <EntityType Name="Tbl_Place_UserStatus">
+    <Key>
+      <PropertyRef Name="id_status" />
+    </Key>
+    <Property Name="id_status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="statusU" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Place_Users" Relationship="DbFacilitesSystemModel.FK_UserToStatus" FromRole="Tbl_Place_UserStatus" ToRole="Tbl_Place_Users" />
+  </EntityType>
+  <Association Name="FK_DiagramToArea">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Area_" Role="Tbl_Place_Area_" Multiplicity="1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Diagram" Role="Tbl_Place_Diagram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_Area_">
+        <PropertyRef Name="id_area" />
+      </Principal>
+      <Dependent Role="Tbl_Place_Diagram">
+        <PropertyRef Name="id_area" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AssignmentoCode">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Code" Role="Tbl_Place_Code" Multiplicity="1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Assignment" Role="Tbl_Place_Assignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_Code">
+        <PropertyRef Name="id_code" />
+      </Principal>
+      <Dependent Role="Tbl_Place_Assignment">
+        <PropertyRef Name="id_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AssignmentoUsers">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Users" Role="Tbl_Place_Users" Multiplicity="1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Assignment" Role="Tbl_Place_Assignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_Users">
+        <PropertyRef Name="id_users" />
+      </Principal>
+      <Dependent Role="Tbl_Place_Assignment">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AssReq_to_Codes">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Code" Role="Tbl_Place_Code" Multiplicity="1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_AssignmentRequests" Role="Tbl_Place_AssignmentRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_Code">
+        <PropertyRef Name="id_code" />
+      </Principal>
+      <Dependent Role="Tbl_Place_AssignmentRequests">
+        <PropertyRef Name="id_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AssReq_to_Users">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Users" Role="Tbl_Place_Users" Multiplicity="1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_AssignmentRequests" Role="Tbl_Place_AssignmentRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_Users">
+        <PropertyRef Name="id_users" />
+      </Principal>
+      <Dependent Role="Tbl_Place_AssignmentRequests">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CodesToDiagram">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Diagram" Role="Tbl_Place_Diagram" Multiplicity="1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Code" Role="Tbl_Place_Code" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_Diagram">
+        <PropertyRef Name="id_diagram" />
+      </Principal>
+      <Dependent Role="Tbl_Place_Code">
+        <PropertyRef Name="id_diagram" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Place_Code_type_place">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_TypePlace" Role="Tbl_Place_TypePlace" Multiplicity="0..1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Code" Role="Tbl_Place_Code" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_TypePlace">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tbl_Place_Code">
+        <PropertyRef Name="type_place" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DiagramToSubarea">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Subarea" Role="Tbl_Place_Subarea" Multiplicity="0..1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Diagram" Role="Tbl_Place_Diagram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_Subarea">
+        <PropertyRef Name="id_subarea" />
+      </Principal>
+      <Dependent Role="Tbl_Place_Diagram">
+        <PropertyRef Name="id_subarea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserToUserRoles">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_UserRoles" Role="Tbl_Place_UserRoles" Multiplicity="1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Users" Role="Tbl_Place_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_UserRoles">
+        <PropertyRef Name="id_roles" />
+      </Principal>
+      <Dependent Role="Tbl_Place_Users">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserToStatus">
+    <End Type="DbFacilitesSystemModel.Tbl_Place_UserStatus" Role="Tbl_Place_UserStatus" Multiplicity="1" />
+    <End Type="DbFacilitesSystemModel.Tbl_Place_Users" Role="Tbl_Place_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Place_UserStatus">
+        <PropertyRef Name="id_status" />
+      </Principal>
+      <Dependent Role="Tbl_Place_Users">
+        <PropertyRef Name="id_status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

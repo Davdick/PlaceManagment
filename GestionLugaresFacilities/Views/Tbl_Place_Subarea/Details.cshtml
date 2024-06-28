@@ -1,0 +1,26 @@
+﻿@model GestionLugaresFacilities.Models.Tbl_Place_Subarea
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tbl_Place_Subarea</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name_subarea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name_subarea)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_subarea }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

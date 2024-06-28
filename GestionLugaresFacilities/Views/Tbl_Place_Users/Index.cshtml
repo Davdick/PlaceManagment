@@ -1,0 +1,81 @@
+﻿@model IEnumerable<GestionLugaresFacilities.Models.Tbl_Place_Users>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id_employee)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.name_employee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ibt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.supervisor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Place_UserRoles.rol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Place_UserStatus.statusU)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_employee)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.name_employee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ibt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.position)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supervisor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Tbl_Place_UserRoles.rol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tbl_Place_UserStatus.statusU)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.id_users }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.id_users }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id = item.id_users })
+        </td>
+    </tr>
+}
+
+</table>

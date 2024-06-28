@@ -1,0 +1,63 @@
+﻿@model IEnumerable<GestionLugaresFacilities.Models.Tbl_Place_Code>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.data_coord)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type_place)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.chair_code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Diagram.data_info)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.data_coord)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type_place)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.chair_code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tbl_Place_Diagram.data_info)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_code }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_code }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_code })
+        </td>
+    </tr>
+}
+
+</table>

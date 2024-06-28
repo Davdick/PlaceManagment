@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DbFacilitesSystemModelStoreContainer" CdmEntityContainer="DbFacilitesSystemEntities">
+    <EntitySetMapping Name="Tbl_Place_Area_">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_Area_">
+        <MappingFragment StoreEntitySet="Tbl_Place_Area ">
+          <ScalarProperty Name="name_area" ColumnName="name_area" />
+          <ScalarProperty Name="id_area" ColumnName="id_area" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_Assignment">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_Assignment">
+        <MappingFragment StoreEntitySet="Tbl_Place_Assignment">
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="id_code" ColumnName="id_code" />
+          <ScalarProperty Name="id_assignment" ColumnName="id_assignment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_AssignmentRequests">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_AssignmentRequests">
+        <MappingFragment StoreEntitySet="Tbl_Place_AssignmentRequests">
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="id_code" ColumnName="id_code" />
+          <ScalarProperty Name="id_assreq" ColumnName="id_assreq" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_Code">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_Code">
+        <MappingFragment StoreEntitySet="Tbl_Place_Code">
+          <ScalarProperty Name="chair_code" ColumnName="chair_code" />
+          <ScalarProperty Name="type_place" ColumnName="type_place" />
+          <ScalarProperty Name="date_time" ColumnName="date_time" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="data_coord" ColumnName="data_coord" />
+          <ScalarProperty Name="id_diagram" ColumnName="id_diagram" />
+          <ScalarProperty Name="id_code" ColumnName="id_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_Diagram">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_Diagram">
+        <MappingFragment StoreEntitySet="Tbl_Place_Diagram">
+          <ScalarProperty Name="data_info" ColumnName="data_info" />
+          <ScalarProperty Name="size_y" ColumnName="size_y" />
+          <ScalarProperty Name="size_x" ColumnName="size_x" />
+          <ScalarProperty Name="piso_snorkel" ColumnName="piso_snorkel" />
+          <ScalarProperty Name="id_subarea" ColumnName="id_subarea" />
+          <ScalarProperty Name="id_area" ColumnName="id_area" />
+          <ScalarProperty Name="id_diagram" ColumnName="id_diagram" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_Subarea">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_Subarea">
+        <MappingFragment StoreEntitySet="Tbl_Place_Subarea">
+          <ScalarProperty Name="name_subarea" ColumnName="name_subarea" />
+          <ScalarProperty Name="id_subarea" ColumnName="id_subarea" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_TypePlace">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_TypePlace">
+        <MappingFragment StoreEntitySet="Tbl_Place_TypePlace">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_UserRoles">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_UserRoles">
+        <MappingFragment StoreEntitySet="Tbl_Place_UserRoles">
+          <ScalarProperty Name="rol" ColumnName="rol" />
+          <ScalarProperty Name="id_roles" ColumnName="id_roles" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_Users">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_Users">
+        <MappingFragment StoreEntitySet="Tbl_Place_Users">
+          <ScalarProperty Name="id_status" ColumnName="id_status" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+          <ScalarProperty Name="id_users" ColumnName="id_users" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_Place_UserStatus">
+      <EntityTypeMapping TypeName="DbFacilitesSystemModel.Tbl_Place_UserStatus">
+        <MappingFragment StoreEntitySet="Tbl_Place_UserStatus">
+          <ScalarProperty Name="statusU" ColumnName="statusU" />
+          <ScalarProperty Name="id_status" ColumnName="id_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

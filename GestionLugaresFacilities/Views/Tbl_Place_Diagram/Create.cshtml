@@ -1,0 +1,204 @@
+﻿@model GestionLugaresFacilities.Models.Tbl_Place_Diagram
+
+<link rel="stylesheet" href="~/Content/btnBack.css" />
+<br />
+<div>
+    @*@Html.ActionLink("Regresar", "Index", new { htmlAttributes = new { @class = "btn btn-info" } })*@
+    <button class="btn-back" onclick="backDiagramsIndex()">
+        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+        <span>Back</span>
+    </button>
+</div>
+<form id="formDiagram">
+    <div class="form-group">
+        @Html.LabelFor(model => model.id_area, "id_area", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("id_area", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.id_area, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.id_subarea, "id_subarea", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("id_subarea", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.id_subarea, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="piso_snorkel" class="control-label col-md-2">Piso o snorkel</label>
+        <div class="col-md-10">
+            <input type="number" min="1" id="piso_snorkel" name="piso_snorkel" class="form-control" />
+        </div>
+
+    </div>
+    <div class="form-group">
+        <input type="hidden" id="size_x" name="size_x" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" id="size_y" name="size_y" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" id="data_info" name="data_info" />
+    </div>
+    <input class="btn btn-info" type="submit" value="Enviar" id="enviarFormulario" />
+</form>
+
+
+@*<h2>Create</h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Diagram</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.id_area, "id_area", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("id_area", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.id_area, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.id_subarea, "id_subarea", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("id_subarea", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.id_subarea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.piso_snorkel, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.piso_snorkel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.piso_snorkel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.size_x, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.size_x, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.size_x, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.size_y, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.size_y, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.size_y, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.data_info, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.data_info, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.data_info, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }*@
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<h2>Create</h2>
+
+
+<div id="content-input-row-col">
+    <button class="btn btn-info" onclick="addRow()">Agregar fila</button>
+    <button class="btn btn-info" onclick="addCol()">Agregar columna</button>
+    @*<button id="agrupar" disabled>Agrupar</button>*@
+    <button class="btn btn-info" id="saveobject" onclick="saveobject()" disabled>Registrar objeto</button>
+    <button class="btn btn-info" id="delete" onclick="deletebtn()" disabled>Borrar</button>
+</div>
+
+<section class="form-datos-xd">
+    <form></form>
+</section>
+<div id="tblcss">
+    <h2>Diagrama</h2>
+
+    <table class="tbl1j">
+        @for (int i = 0; i < 10; i++)
+        {
+
+
+            <tr>
+                @for (int j = 0; j < 10; j++)
+                {
+                    @*<td data-coord="{x:@i, y:@j}">X: i  Y:@j</td>*@
+                    <td onclick="selectElm(this)" class="unsucces" data-ady="" data-coord="@(String.Format("{{\"x\":{0}, \"y\":{1}}}",i,j))">X: @i  Y:@j</td>
+                }
+
+
+            </tr>
+        }
+    </table>
+
+</div>
+<p>
+
+</p>
+<p>
+
+</p>
+
+
+<div id="containertble">
+    <!--TABLA HERE-->
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+<script src="~/Scripts/createDiagram.js"></script>
+<script>
+    function backDiagramsIndex() {
+        var url = '@Url.Action("Index", "Tbl_Place_Diagram")';
+        window.location.href = url;
+    }
+
+</script>
+
+<style>
+    td {
+        width: 65px;
+        height: 65px;
+    }
+
+    table {
+        border: 1px;
+    }
+
+    .succes {
+        background: #d9edf7;
+    }
+
+    .unsucces {
+        background-color: white;
+    }
+
+        .unsucces:hover {
+            background-color: #dfe4e7;
+        }
+
+    .nnn:hover {
+        background-color: #dfe4e7;
+    }
+</style>

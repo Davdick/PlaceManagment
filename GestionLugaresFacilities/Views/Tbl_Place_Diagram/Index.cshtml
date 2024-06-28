@@ -1,0 +1,287 @@
+﻿@model IEnumerable<GestionLugaresFacilities.Models.Tbl_Place_Diagram>
+
+@{
+    ViewBag.Title = "Diagramas";
+}
+<link rel="stylesheet" href="~/Content/btnDownload.css" />
+<link rel="stylesheet" href="~/Content/tableStyle.css" />
+<link rel="stylesheet" href="~/Content/btnEdit.css" />
+<link rel="stylesheet" href="~/Content/btnDel.css" />
+<link rel="stylesheet" href="~/Content/btnAdd.css" />
+<h2>Layouts</h2>
+<div class="btnsDiagram">
+    <button class="Btnnn" onclick="showModal()">
+
+        <div class="signnn">+</div>
+
+        <div class="texttt">Crear</div>
+    </button>
+    <br />
+    
+    <section>
+        <button class="btnjk" type="button" onclick="dwnExcelAllData()">
+            Descargar Excel
+            <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" id="bdd05811-e15d-428c-bb53-8661459f9307" data-name="Layer 2" class="svg"><path d="M17.5,22.131a1.249,1.249,0,0,1-1.25-1.25V2.187a1.25,1.25,0,0,1,2.5,0V20.881A1.25,1.25,0,0,1,17.5,22.131Z"></path><path d="M17.5,22.693a3.189,3.189,0,0,1-2.262-.936L8.487,15.006a1.249,1.249,0,0,1,1.767-1.767l6.751,6.751a.7.7,0,0,0,.99,0l6.751-6.751a1.25,1.25,0,0,1,1.768,1.767l-6.752,6.751A3.191,3.191,0,0,1,17.5,22.693Z"></path><path d="M31.436,34.063H3.564A3.318,3.318,0,0,1,.25,30.749V22.011a1.25,1.25,0,0,1,2.5,0v8.738a.815.815,0,0,0,.814.814H31.436a.815.815,0,0,0,.814-.814V22.011a1.25,1.25,0,1,1,2.5,0v8.738A3.318,3.318,0,0,1,31.436,34.063Z"></path></svg></span>
+        </button>
+    </section>
+</div>
+
+ <!--modal-->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Agregar</h2>
+        <form id="formDiagram">
+            <div class="form-group">
+                <label for="id_area">Area</label>
+                    @Html.DropDownList("id_area", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.id_subarea, "id_subarea", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <label for="id_subarea">Subarea</label>
+                    @Html.DropDownList("id_subarea", null, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.ValidationMessageFor(model => model.id_subarea, "", new { @class = "text-danger" })*@
+                
+            </div>
+            <div class="form-group">                  
+                    <label for="piso_snorkel" class="control-label col-md-2">Piso o snorkel</label>
+                    <input type="number" min="1" id="piso_snorkel" name="piso_snorkel" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="size_x">Dimensiones en Y</label>
+                <input id="size_x" name="size_x" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="size_y">Dimensiones en X</label>
+                <input id="size_y" name="size_y" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <input id="data_info" name="data_info" class="form-control" type="hidden"/>
+            </div>
+            <input class="btn btn-success" type="submit" value="Crear" id="enviarFormulario" />
+        </form>
+        <br />
+        <p>OR</p>
+        @Html.ActionLink("Crear plantilla personalizada", "Create", "Tbl_Place_Diagram", new { @class = "btn btn-primary", @type = "button" })
+
+    </div>
+</div>
+
+<table class="table-responsive">
+    <thead>
+        <tr>
+
+            @*<th>
+                    @Html.DisplayNameFor(model => model.size_x)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.size_y)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.data_info)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Area_.name_area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tbl_Place_Subarea.name_subarea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.piso_snorkel)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.size_x)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.size_y)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.data_info)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tbl_Place_Area_.name_area)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tbl_Place_Subarea.name_subarea)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.piso_snorkel)
+                </td>
+                <td>
+
+                    @*@Html.ActionLink("Edit", "editAdmin", new { id = item.id_diagram }) | |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id_diagram }) |*@
+                    <div class="btnsUD">
+                        <button class="edit-button" onclick="editLayout(@item.id_diagram)">
+                            <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                                <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                            </svg>
+                        </button>
+
+                        <button class="delete-button" onclick="deleteLayout(@item.id_diagram)">
+                            <svg class="delete-svgIcon" viewBox="0 0 448 512">
+                                <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+
+    }
+
+</table>
+@section Scripts {
+   @Scripts.Render("~/bundles/jqueryval")
+    <script>
+    function dwnExcelAllData() {
+        //let actionLink = "/Tbl_Place_Diagram/DownloadExcelAll/";
+        let actionLink = '@Url.Action("DownloadExcellAll", "Tbl_Place_Diagram")'
+        window.location.href = actionLink;
+    }
+    function editLayout(id) {
+        var url = '@Url.Action("editAdmin", "Tbl_Place_Diagram")?id=' + id;
+        window.location.href = url;
+    }
+    function deleteLayout(id) {
+       var url = '@Url.Action("Delete", "Tbl_Place_Diagram")?id=' + id;
+        window.location.href = url;
+    }
+    function deleteLayout(id) {
+       var url = '@Url.Action("Delete", "Tbl_Place_Diagram")?id=' + id;
+        window.location.href = url;
+    }
+    function addLayout() {
+       var url = '@Url.Action("Create", "Tbl_Place_Diagram")';
+        window.location.href = url;
+    }
+    function showModal() {
+        $('#myModal').show();
+    }
+    $('.close').on('click', function () {
+        $('#myModal').hide();
+    });
+    $(window).on('click', function (event) {
+        if (event.target.id === 'myModal') {
+            $('#myModal').hide();
+        }
+        });
+        //validar si el area es diferente a planta manufactura deshabilitar la subarea
+        $('#id_area').change(function () {
+            var selectedOption = $(this).val();
+            if (selectedOption != '1') {
+                $('#id_subarea').prop('disabled', true);
+            } else {
+                $('#id_subarea').prop('disabled', false);
+            }
+        });
+
+        //enviar POST
+        $('#formDiagram').submit(function (event) {
+            event.preventDefault();
+
+            var idSubareaSelect = $("#id_subarea");
+            // Establecer el valor de id_subarea en null antes de enviar el formulario
+            if (idSubareaSelect.prop("disabled")) {
+                idSubareaSelect.val(null);
+            }
+            var list = [];
+            let limitx = document.getElementById("size_x").value;
+            let limity = document.getElementById("size_y").value;
+           
+            for (let i = 0; i < limitx; i++) {
+                for (let j = 0; j < limity; j++) {
+                    list.push({ x: i, y: j });
+                }
+            }
+            console.log(list);
+            list = JSON.stringify(list);
+            document.getElementById("data_info").value = list;
+            // Obtener los datos del formulario usando FormData
+            var formData = new FormData(this);
+
+            // Realizar la petición AJAX con los datos del formulario
+
+
+            $.ajax({
+                url: 'http://sagtdbw01/PlaceManagment/Tbl_Place_Assignment/JUAS/Tbl_Place_Diagram/Create',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    // Manejar la respuesta del servidor
+                    //console.log('Respuesta del servidor:', response);
+                    alert("Registrado!!");
+                    location.reload();
+                },
+                error: function (error) {
+                    // Manejar el error en caso de que ocurra
+                    console.error('Error en la petición:', error);
+                }
+            });
+        });
+
+</script>
+}
+
+<style>
+    .btnsUD {
+        display: flex;
+        align-content: flex-start;
+        width: 100px;
+    }
+    .btnsDiagram{
+        display:flex;
+        flex-direction:row;
+        margin-left:110px;
+        padd:20px;
+    }
+    .Btnnn{
+        margin-right:18px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover {
+            color: #000;
+    }
+
+</style>
+

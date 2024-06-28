@@ -1,0 +1,320 @@
+﻿@model IEnumerable<GestionLugaresFacilities.Models.Tbl_Place_Area_>
+  
+
+        @*<div style="text-align:center" class="jumbotron cont-title">
+                <h1 >Gestión de lugares</h1>
+
+            </div>*@
+    <!-- modal planta-->
+        <div id="myModal1" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Buscar</h2>
+
+                @*<form id="formAssign">
+                    <div>
+                        <input type="hidden" value="Planta Manufactura AGS" name="area" />
+                        <label>Selecciona subarea</label>
+                        <select name="subarea">
+                            <option value="B1">B1</option>
+                            <option value="B2">B2</option>
+                            <option value="B3">B3</option>
+                            <option value="B4">B4</option>
+                            <option value="B5">B5</option>
+                            <option value="B6">B6</option>
+                            <option value="B7">B7</option>
+                        </select>
+                        <br />
+                        <label>Snorkel</label>
+                        <input type="number" min="1" max="5" name="piso_snk" value="1" />
+
+                    </div>
+                    <input type="submit" value="Ver" id="enviarFormularioP" class="btn btn-info" />
+                </form>*@
+                <table id="dataTable" class="table table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th>Area</th>
+                            <th>Subarea</th>
+                            <th>Snorkel</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos se llenarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <!-- modal Central B1-->
+        <div id="myModal2" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Buscar</h2>
+
+                <form id="formAssigncb1">
+                    <div>
+                        <input type="hidden" value="Central Building 1" id="area" name="area" />
+                        <label>Selecciona planta</label>
+                        <select name="piso_snk">
+                            <option value="1" name="piso_snk">Planta baja</option>
+                            <option value="2" name="piso_snk">Planta alta</option>
+                        </select>
+
+                    </div>
+                    <input type="submit" value="Ver" id="enviarFormularioCB" class="btn btn-info" />
+                </form>
+            </div>
+        </div>
+    <!-- modal Central B2-->
+        <div id="myModal3" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Buscar</h2>
+
+                <form id="formAssigncb2">
+                    <div>
+                        <input type="hidden" value="Central Building 2" name="area" />
+                        <label>Selecciona planta</label>
+                        <select name="piso_snk">
+                            <option value="1" name="piso_snk">Planta baja</option>
+                            <option value="2" name="piso_snk">Planta alta</option>
+                        </select>
+
+                    </div>
+                    <input type="submit" value="Ver" id="enviarFormularioCB" class="btn btn-info" />
+                </form>
+            </div>
+        </div>
+
+        
+            <h2>( @Settings.LoggedUser.User.id_employee)</h2>
+        <div class="find-area-d">
+            <section>
+                <h3>Buscar por area</h3>
+            </section>
+
+            <table class="table-responsive tbl-index-area">
+                <tr>
+
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.name_area)*@
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            <button onclick="modalS('@item.name_area')" class="cta">
+                                <span class="hover-underline-animation">@Html.DisplayFor(modelItem => item.name_area)</span>
+                                <svg viewBox="0 0 46 16" height="10" width="30" xmlns="http://www.w3.org/2000/svg" id="arrow-horizontal">
+                                    <path transform="translate(30)" d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z" data-name="Path 10" id="Path_10"></path>
+                                </svg>
+                            </button>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+
+
+        </div>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            <script>
+
+
+        function searchDiagram() {
+        let code = document.getElementById('find-code').value;
+        if (code != null && code!= "" && code.length >= 8 && code.length<12){
+            var url = '@Url.Action("editAdmin", "Tbl_Place_Diagram")?code='+code;
+            //$('#partial-view-layout').load(url);
+            window.location.href = url;
+        } else {
+            alert("codigo erroneo");
+        }
+    }
+
+    function modalS(area) {
+        switch (area) {
+            case "Planta Manufactura AGS":
+                $('#myModal1').show();
+                break;
+            case "Central Building 1":
+                $('#myModal2').show();
+                break;
+            case "Central Building 2":
+                $('#myModal3').show();
+                break;
+            case "Reclutamiento":
+                let area = "Reclutamiento";
+
+                let piso_snk = 1;
+                var url = '@Url.Action("Index", "Tbl_Place_Assignment")?area=' + area +'&piso_snk=' + piso_snk;
+                window.location.href = url;
+                break;
+            case "Hexmake":
+                var areaa = "Hexmake";
+
+                var piso = 1;
+                var url = '@Url.Action("Index", "Tbl_Place_Assignment")?area=' + areaa +'&piso_snk=' + piso;
+                window.location.href = url;
+                break;
+            // Puedes añadir más casos si lo necesitas
+            default:
+                // Código por defecto si area no coincide con ningún caso
+                break;
+        }
+
+    }
+                function gotolayout(area, subarea, floor) {
+                    var url = '@Url.Action("Index", "Tbl_Place_Assignment")?area=' + area + '&subarea'+subarea +'&piso_snk=' + floor;
+                    window.location.href = url;
+                }
+
+    // Cerrar la modal cuando se hace clic en el elemento que cierra
+    $('.close').on('click', function () {
+        $('#myModal1').hide();
+        $('#myModal2').hide();
+        $('#myModal3').hide();
+    });
+    // Cerrar la modal cuando se hace clic fuera de la modal
+    $(window).on('click', function (event) {
+        if (event.target.id === 'myModal1' || event.target.id === 'myModal2' || event.target.id === 'myModal3') {
+            $('#myModal1').hide();
+            $('#myModal2').hide();
+            $('#myModal3').hide();
+        }
+    });
+
+
+
+    //////////// AJAX ////////////////////////
+    //GetDiagramAreasPlanta
+                $.ajax({
+                    url: '@Url.Action("GetDiagramAreasPlanta", "Tbl_Place_Diagram")', // URL del servidor
+                    method: 'GET', // Método HTTP (GET, POST, PUT, DELETE, etc.)
+                    dataType: 'json', // Tipo de datos que se espera del servidor
+                    success: function (data) {
+                        console.log(data);
+                        // Limpiar la tabla
+                        $('#dataTable tbody').empty();
+
+                        // Llenar la tabla con los datos obtenidos
+                        $.each(data, function (index, item) {
+                            $('#dataTable tbody').append(`
+                    <tr>
+                        <td>${item.Area}</td>
+                        <td>${item.Subarea}</td>
+                        <td>${item.Floor}</td>
+                        <td><button class="btn btn-info" onclick="gotolayout('${item.Area}','${item.Subarea}',${item.Floor})">Ver</button></td>
+                    </tr>
+                `);
+                        });
+                    },
+                    error: function (error) {
+                        // Función que se ejecuta cuando hay un error
+                        console.error('Error al obtener los datos de PLANTA:', error);
+                    }
+                });
+    //enviar POST
+    $('#formAssign').submit(function (event) {
+        event.preventDefault();
+
+        // Obtener los datos del formulario usando FormData
+        var formData = new FormData(this);
+        let area = formData.getAll('area');
+        let subarea = formData.getAll('subarea');
+        let piso_snk = formData.getAll('piso_snk');
+        var url = '@Url.Action("Index", "Tbl_Place_Assignment")?area=' + area + '&subarea=' + subarea + '&piso_snk=' + piso_snk;
+        window.location.href = url;
+    });
+    ///////
+    $('#formAssigncb1').submit(function (event) {
+    event.preventDefault();
+
+    // Obtener los datos del formulario usando FormData
+    var formData = new FormData(this);
+
+        let area = formData.getAll('area');
+        let subarea = formData.getAll('subarea');
+        let piso_snk = formData.getAll('piso_snk');
+        var url = '@Url.Action("Index", "Tbl_Place_Assignment")?area=' + area + '&piso_snk=' + piso_snk;
+        window.location.href = url;
+
+    });
+    ////////////
+    $('#formAssigncb2').submit(function (event) {
+    event.preventDefault();
+
+// Obtener los datos del formulario usando FormData
+        var formData = new FormData(this);
+        let area = formData.getAll('area');
+        let subarea = formData.getAll('subarea');
+        let piso_snk = formData.getAll('piso_snk');
+        var url = '@Url.Action("Index", "Tbl_Place_Assignment")?area=' + area +  '&piso_snk=' + piso_snk;
+        window.location.href = url;
+
+    });
+            </script>
+        }
+        <style>
+            .img-eye {
+                vertical-align: middle;
+                margin-right: 5px;
+                width: 25px;
+                height: 25px;
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+
+            .modal-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+            }
+
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+                .close:hover {
+                    color: #000;
+                }
+
+            .content-search-tbl {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .cont-title {
+                border-radius: 45px;
+                background: linear-gradient(145deg, #5e6c62, #6f8075);
+                box-shadow: 15px 15px 90px #232624, -15px -15px 90px #8b9a90;
+            }
+            .dataTable {
+                overflow-x: auto;
+            }
+
+        </style>

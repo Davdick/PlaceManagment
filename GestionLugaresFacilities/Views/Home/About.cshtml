@@ -1,0 +1,364 @@
+﻿
+
+<link rel="stylesheet" href="~/Content/LoadingAbout.css">
+<link rel="stylesheet" href="~/Content/LoadingBallsUp.css">
+<link rel="stylesheet" href="~/Content/btnSearchE.css">
+<br />
+
+<br />
+<section class="row">
+
+    <div class="col-md-4 cont-1">
+        <div class="row container-center">
+            <div>
+                <div class="btn-cont col-xs-6 col-md-4">
+                    <button onclick="showUsers()" class="btn btn-primary btn-lg">Usuarios</button>
+                </div>
+                <div class="btn-cont col-xs-6 col-md-4">
+                    <button onclick="showSearchUser()" class="btn btn-info btn-lg">Usuario <br />por<br /> codigo</button>
+                </div>
+                <div class="btn-cont col-xs-6 col-md-4">
+                    <button onclick="showAreas()" class="btn btn-danger btn-lg">Areas</button>
+                </div>
+            </div>
+           
+
+        </div>
+        <div class="row">
+           
+            <div class="col-xs-6 col-md-4">
+                <button onclick="showSubareas()" class="btn btn-success btn-lg">Subareas</button>
+            </div>
+            <div class="col-xs-6 col-md-4">
+                <button onclick="showRequests()" class="btn btn-warning btn-lg">Tickets</button>
+            </div>
+            <div class="col-xs-6 col-md-4"></div>
+
+        </div>
+
+    </div>
+    <br />
+   
+    <section class="col-md-4 container-partials">
+
+        <div id="partial-view" class="row">
+
+            <!--ESTO SE REEMPLAZA, LOADING-->
+            <div class="carddd">
+                <div class="card__skeletonnn card__titleee"></div>
+                <div class="card__skeletonnn card__descriptionnn">         </div>
+            </div>
+
+
+
+            <!---------------------------------------->
+
+        </div>
+    </section>
+
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        showRequests();
+        var templateLoading = `
+              <div class="wrapper">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="shadow"></div>
+    <div class="shadow"></div>
+    <div class="shadow"></div>
+</div>
+        `;
+        var templateSearchUser = `<br/><div id="scemp">
+        <label for="inpt-codemp">Buscar por codigo</label>
+        <input id="inpt-codemp" class="inpt-btn" type="text" placeholder="X123456789" />
+        <button class="btn-search btn-primary"  onclick="btnsearch()">Buscar</button>
+    </div>`;
+        function showUsers() {
+            let url = '@Url.Action("UsersPartial", "Tbl_Place_Users")';
+            $('#partial-view').html(templateLoading);
+            $('#partial-view').load(url);
+            //$('#scemp').show();
+        }
+         function showSearchUser() {
+            let url = '@Url.Action("UsersPartial", "Tbl_Place_Users")';
+            $('#partial-view').html(templateSearchUser);
+            //$('#partial-view').load(url);
+            //$('#scemp').show();
+        }
+       function showAreas() {
+           let url = '@Url.Action("AreasPartial", "Tbl_Place_Area_")';
+           $('#scemp').hide();
+           $('#partial-view').html(templateLoading);
+            $('#partial-view').load(url);
+        }
+        function showSubareas() {
+            $('#scemp').hide();
+            $('#partial-view').html(templateLoading);
+            let url ='@Url.Action("SubareasPartialView", "Tbl_Place_Subarea")';
+            $('#partial-view').load(url);
+        }
+        function btnsearch() {
+            let val = document.getElementById("inpt-codemp").value;
+            $('#partial-view').html(templateLoading);
+            var url = '@Url.Action("UsersPartialSpecific", "Tbl_Place_Users")?code=' + val;
+            $('#partial-view').load(url);
+        }
+        function showRequests() {
+            $('#scemp').hide();
+            $('#partial-view').html(templateLoading);
+            let url ='@Url.Action("PartialIndex", "Tbl_Place_AssignmentRequests")';
+            $('#partial-view').load(url);
+        }
+          ///USER PARTIAL
+    function addUserPartial() {
+         var url = '@Url.Action("Create", "Tbl_Place_Users")';
+        window.location.href = url;
+        }
+    function editUserPartial(id) {
+         var url = '@Url.Action("Edit", "Tbl_Place_Users")?id=' + id;
+        window.location.href = url;
+        }
+    function deleteUserPartial(id) {
+         var url = '@Url.Action("Delete", "Tbl_Place_Users")?id=' + id;
+        window.location.href = url;
+        }
+        //AREAS PARTIAL
+            function addAreaPartial() {
+         var url = '@Url.Action("Create", "Tbl_Place_Area_")';
+        window.location.href = url;
+        }
+    function editAreaPartial(id) {
+         var url = '@Url.Action("Edit", "Tbl_Place_Area_")?id=' + id;
+        window.location.href = url;
+        }
+    function deleteAreaPartial(id) {
+         var url = '@Url.Action("Delete", "Tbl_Place_Area_")?id=' + id;
+        window.location.href = url;
+        }
+             //SUBAREAS PARTIAL
+    function addSubPartial() {
+         var url = '@Url.Action("Create", "Tbl_Place_Subarea")';
+        window.location.href = url;
+        }
+    function editSubPartial(id) {
+         var url = '@Url.Action("Edit", "Tbl_Place_Subarea")?id=' + id;
+        window.location.href = url;
+        }
+    function deleteSubPartial(id) {
+         var url = '@Url.Action("Delete", "Tbl_Place_Subarea")?id=' + id;
+        window.location.href = url;
+        }
+           //REQUESTS PARTIAL
+
+    function viewPartial(id) {
+         var url = '@Url.Action("Edit", "Tbl_Place_Subareas")?id=' + id;
+        window.location.href = url;
+        }
+    function deletePartial(id) {
+         var url = '@Url.Action("Delete", "Tbl_Place_AssignmentRequests")?id=' + id;
+        window.location.href = url;
+        }
+         function modalInfo(id) {
+        $('#myModalUsers').show();
+       
+         $.ajax({
+            url: '@Url.Action("GetApiEmployee", "Tbl_Place_Users")',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                idEmp: id
+            },
+            success: function (data) {
+            document.getElementById("idemp").value = data.EmployeeNumber;
+            document.getElementById("nemp").value = data.EmployeeName;
+            //document.getElementById("lastn").value = lastn;
+            document.getElementById("ibt").value = data.IBT;
+            document.getElementById("sup").value = data.SupervisorName;
+           // document.getElementById("position").value = data.position;
+            document.getElementById("email").value = data.EmployeeNumber+"@@sensata.com";
+            var apiUrl = `http://mexico.corp.sensata.com/Utils/API/Employee/GetPhoto/${id} `;
+            document.getElementById('imagenApi').src = apiUrl;
+            },
+            error: function (error) {
+                console.error('Error al obtener datos desde el servidor:', error);
+            }
+        });
+    }
+    $('#close').on('click', function () {
+        $('#myModalUsers').hide()
+         });
+        // Cerrar la modal cuando se hace clic fuera de la modal
+        $(window).on('click', function (event) {
+            if (event.target.id === 'myModalUsers') {
+                $('#myModalUsers').hide();
+            }
+        });
+
+///////////////////          POST A ASSIGNMENT                  //////////////////////
+    function acceptRequest(idCode, idUser) {
+        debugger;
+
+            event.preventDefault();
+   // mostrarCargando(); // Mostrar el estado de carga
+
+            var formData = new FormData();
+            formData.append('id_code', idCode);
+            formData.append('id_user', idUser);
+
+   // console.log(Data);
+    // Realizar la petición AJAX con los datos del formulario
+    $.ajax({
+        url: '@Url.Action("Create", "Tbl_Place_Assignment")',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            // Manejar la respuesta del servidor
+            console.log('Respuesta del servidor:', response);
+            alert("Registrado!");
+            $("body").removeClass("loading");
+            $('#myModal2').hide();
+            // Limpiar los inputs después de enviar el formulario
+            //$('#formDiagramUser').trigger("reset");
+
+            location.reload();
+        },
+        error: function (error) {
+            // Manejar el error en caso de que ocurra
+            console.error('Error en la petición:', error);
+            alert("Error! Intenta nuevamente");
+            $("body").removeClass("loading");
+        }
+    });
+        }
+
+
+    </script>
+}
+<style>
+    .cont-1{
+       margin-right:60px;
+        padding-right:60px;
+    }
+    .container-partials {
+        display: flex;
+        justify-content: center;
+        background: #ffffff;
+        width:700px;
+        border-radius: 15px;
+        /*border: 2px double black;*/
+    }
+    .btn{
+        height:150px;
+        width:150px;
+       
+        border-radius:100px;
+    }
+    .btn-cont {
+        
+    }
+    #partial-view {
+        width:600px; /* Establece el ancho del contenedor */
+        height: 600px;
+        overflow: auto;
+    }
+    .inpt-btn, .btn-search{
+        border-radius:6px;
+    }
+    .container-center{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    .cont-btns {
+        display: flex;
+        justify-content: flex-start;
+    }
+    /* Estilo para la tabla con bordes redondeados */
+
+    table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 20px auto; /* Centrar la tabla en la página */
+        border-radius: 10px; /* Radio de borde para la tabla */
+        overflow: hidden; /* Ocultar contenido que exceda el radio de borde */
+    }
+
+
+
+
+    /* Estilo para las celdas */
+
+    td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd; /* Borde inferior para las filas */
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-radius: 15px; /* Radio de borde para las celdas */
+    }
+
+    thead {
+        border-bottom: 3px solid #ddd;
+        height: 5rem;
+        border-radius: 20px;
+    }
+
+
+
+
+    /* Estilo para las cabeceras */
+
+    th {
+        background-color: #f2f2f2; /* Color de fondo para las cabeceras */
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .close:hover {
+            color: #000;
+        }
+
+    .container-datas {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .container-datas > div {
+            width: 55%;
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+</style>

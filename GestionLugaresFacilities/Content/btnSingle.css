@@ -1,0 +1,28 @@
+﻿.btn-single {
+    align-content: center;
+    width: 50px;
+    height: 30px;
+    border: 3px solid #315cfd;
+    border-radius: 45px;
+    transition: all 0.3s;
+    cursor: pointer;
+    background: #315cfd;
+    font-size: .9em;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+    .btn-single:hover {
+        background: #315cfd;
+        color: white;
+        font-size: 1em;
+    }
+
+
+.img-eye {
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 25px;
+    height: 25px;
+}

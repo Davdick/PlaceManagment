@@ -1,0 +1,66 @@
+﻿@model GestionLugaresFacilities.Models.Tbl_Place_Code
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tbl_Place_Code</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.data_coord)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_coord)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.type_place)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type_place)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.chair_code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.chair_code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_Diagram.data_info)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_Diagram.data_info)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_code }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<GestionLugaresFacilities.Models.Tbl_Place_Subarea>
+
+
+<h2>Subareas</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name_subarea)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name_subarea)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_subarea }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.id_subarea }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_subarea })
+        </td>
+    </tr>
+}
+
+</table>
+

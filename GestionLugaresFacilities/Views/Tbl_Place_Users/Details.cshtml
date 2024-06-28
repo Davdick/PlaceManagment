@@ -1,0 +1,90 @@
+﻿@model GestionLugaresFacilities.Models.Tbl_Place_Users
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tbl_Place_Users</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_employee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_employee)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.name_employee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name_employee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ibt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ibt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.position)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.position)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.supervisor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.supervisor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_UserRoles.rol)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_UserRoles.rol)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Place_UserStatus.statusU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Place_UserStatus.statusU)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_users }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

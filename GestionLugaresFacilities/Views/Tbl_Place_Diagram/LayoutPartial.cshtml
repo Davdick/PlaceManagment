@@ -1,0 +1,486 @@
+﻿
+@{
+    ViewBag.Title = "Layout";
+}
+
+
+<table class="tblView">
+    @for (int i = 0; i < @ViewBag.size_x; i++)
+    {
+
+
+        <tr>
+            @for (int j = 0; j < @ViewBag.size_y; j++)
+                {
+                @*<td data-coord="{x:@i, y:@j}">X: i  Y:@j</td>*@
+                <td data-coord="@(String.Format("{{\"x\":{0}, \"y\":{1}}}",i,j))"></td>
+            }
+
+
+        </tr>
+    }
+</table>
+<!-- modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Usuario</h2>
+        <div class="container-datas">
+            <div>
+                <label for="code">Codigo</label>
+                <input id="code" type="text" disabled />
+
+                <label for="place">Lugar</label>
+                <input id="place" type="text" disabled />
+
+                <label for="codechair">Codigo de silla</label>
+                <input id="codechair" type="text" disabled />
+            </div>
+            <div>
+                <label for="idemp">ID empleado</label>
+                <input id="idemp" type="text" disabled />
+
+                <label for="nemp">Nombre empleado</label>
+                <input id="nemp" type="text" disabled />
+
+                <label for="lastn">Apellido</label>
+                <input id="lastn" type="text" disabled />
+            </div>
+            <div>
+                <label for="ibt">IBT</label>
+                <input id="ibt" type="text" disabled />
+
+                <label for="email">Email</label>
+                <input id="email" type="text" disabled />
+
+                <label for="position">Posicion</label>
+                <input id="position" type="text" disabled />
+
+                <label for="sup">Supervisor</label>
+                <input id="sup" type="text" disabled />
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_diagram }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+    var limitX = @ViewBag.size_x;
+    var limitY = @ViewBag.size_y;
+    var data_info = @Html.Raw(ViewBag.data_infos);
+        var idDiagram = @ViewBag.idDiagram;
+        debugger
+        var coords_reg =@Html.Raw(Json.Encode(ViewBag.data_coord));
+        console.log(limitX, limitY, data_info, idDiagram);
+    @*var coords_reg =@Html.Raw(Json.Encode(ViewBag.data_coord));*@
+        data_info = JSON.stringify(data_info);
+    data_info = JSON.parse(data_info);
+        var resDatac = [];
+        coords_reg.forEach(function (item) {
+            var dataCObj = JSON.parse(item.dataC);
+            //var codeNobj =item.codeN;
+            resDatac.push({ x: dataCObj.x, y: dataCObj.y });
+        });
+    console.log(data_info);
+    $(document).ready(function () {
+        //recorre cada item del td
+        $.each($('table td'), function (i, item) {
+            // se obtienen sus atributos y se parsea
+
+            var data = $(item).attr('data-coord');
+            var dataCoord = JSON.parse(data);
+
+            for (let j = 0; j < data_info.length; j++){
+                if (dataCoord.x == data_info[j].x && dataCoord.y == data_info[j].y){
+                  //  console.log("encontrado para pintar lugares", data_info[j]);
+                    $(item).css('background', '#908484');
+                    item.classList.add('follow');
+                    searchUsers();
+                } else {
+                    //console.log("no");
+
+                }
+            }
+        ////// PINTAR CODES VERDE /////////
+            lock();
+            //  PINTAR LOS LUGARES YA CON CODIGOS
+            function lock() {
+                $.each($('table td'), function (i, item) {
+                    // se obtienen sus atributos y se parsea
+
+                    var data = $(item).attr('data-coord');
+                    var dataCoord = JSON.parse(data);
+                    //coords_reg = JSON.stringify(coords_reg);
+                    //debugger
+                    for (let j = 0; j < resDatac.length; j++) {
+                        if (dataCoord.x == resDatac[j].x && dataCoord.y == resDatac[j].y) {
+                            // document.getElementById("idcode1").value = id_codes[j].id;
+                            $(item).css('background', '#5db75c');
+                            //code1[j] = JSON.stringify(code1[j]);
+                            $(item).html('code');
+                            $(item).css('cursor', 'pointer');
+                            // En algún momento, quitar el evento onclick actual y agregar uno nuevo
+                            //$(item).off('click', addCodes);
+                          //  $(item).on('click', addUser);
+                            //console.log('encontrado bd');
+
+
+                        }
+                    }
+
+
+                });
+            }
+
+
+
+
+      /////////////////////////////////////////////////////////
+
+        });
+        //PINTAR BORDES
+        var elms = document.getElementsByClassName("follow");
+        $(elms).css('border-right', 'solid');
+        $(elms).css('border-top', 'solid');
+        $(elms).css('border-left', 'solid');
+        $(elms).css('border-bottom', 'solid');
+        //primer bucle guarda una posicion del array selectitem
+        let ij = 0;
+        while (ij < data_info.length) {
+            //segundo bucle para comparar una posicion del selectitem con todas las demas posiciones y obtener su posicion de adyacencia
+            for (let j = 0; j < data_info.length; j++) {
+                //debajo
+                // debugger
+                if ((data_info[ij].x + 1) == (data_info[j].x) && data_info[ij].y == data_info[j].y) {
+
+                 //   console.log(data_info[j]);
+                 //   console.log("esta debajo de ");
+                 //   console.log(data_info[ij]);
+
+                    $.each($('table td'), function (f, item) {
+
+                        let coord = $(item).attr('data-coord');
+                        coord = JSON.parse(coord);
+                        // debugger
+                        if (coord.x == data_info[ij].x && coord.y == data_info[ij].y) {
+                           // console.log("encontrado en la vista! under");
+                          //  console.log(coord);
+                            $(item).css('border-bottom', 'none');
+
+                        }
+                    });
+                }
+                //arriba
+
+                if ((data_info[ij].x - 1) == (data_info[j].x) && data_info[ij].y == data_info[j].y) {
+                   // console.log(data_info[j]);
+                  //  console.log("esta arriba de ");
+                  //  console.log(data_info[ij]);
+
+                    $.each($('table td'), function (f, item) {
+
+                        let coord = $(item).attr('data-coord');
+                        coord = JSON.parse(coord);
+                        // debugger
+                        if (coord.x == data_info[ij].x && coord.y == data_info[ij].y) {
+                          //  console.log("encontrado en la vista! top");
+                        //    console.log(coord);
+                            $(item).css('border-top', 'none');
+
+
+                        }
+
+                    });
+                }
+                //derecha
+
+                if ((data_info[ij].x) == (data_info[j].x) && (data_info[ij].y + 1) == data_info[j].y) {
+                   // console.log(data_info[j]);
+                   // console.log("esta a la derecha de ");
+                    //console.log(data_info[ij]);
+
+                    $.each($('table td'), function (f, item) {
+
+                        let coord = $(item).attr('data-coord');
+                        coord = JSON.parse(coord);
+                        // debugger
+                        if (coord.x == data_info[ij].x && coord.y == data_info[ij].y) {
+                           // console.log("encontrado en la vista! top");
+                            //console.log(coord);
+                            $(item).css('border-right', 'none');
+                        }
+
+                    });
+                }
+                //izquierda
+                if ((data_info[ij].x) == (data_info[j].x) && (data_info[ij].y - 1) == data_info[j].y) {
+                    console.log(data_info[j]);
+                    //console.log("esta a la izquierda de ");
+                   // console.log(data_info[ij]);
+                    //for each para encontrar la coordenada del primer bucle
+                    $.each($('table td'), function (f, item) {
+
+                        let coord = $(item).attr('data-coord');
+                        coord = JSON.parse(coord);
+                        //debugger
+                        if (coord.x == data_info[ij].x && coord.y == data_info[ij].y) {
+                           // console.log("encontrado en la vista! izq");
+                           // console.log(coord);
+                            $(item).css('border-left', 'none');
+
+                        }
+                    });
+
+                }
+            }
+            ij++;
+           // paintBorders();
+        }
+        function paintBorders() {
+
+            $.each($('.tblView td'), function (i, item) {
+
+                var data = $(item).attr('data-coord');
+                var jsonData = JSON.parse(data);
+
+                let a = jsonData.x;
+                let b = jsonData.y;
+
+                $(item).css('border-right', 'none');
+                $(item).css('border-top', 'none');
+                $(item).css('border-left', 'none');
+                $(item).css('border-bottom', 'none');
+
+                // arriba izquierda
+                if (a == 0 && b == 0) {
+                    $(item).css('border-left', 'solid');
+                    $(item).css('border-top', 'solid');
+                }
+
+                //arriba derecha
+                if (a == 0 && b == limitY - 1) {
+                    $(item).css('border-right', 'solid');
+                    $(item).css('border-top', 'solid');
+                }
+
+                //abajo izquierda
+                if (a == limitX - 1 && b == 0) {
+                    $(item).css('border-left', 'solid');
+                    $(item).css('border-bottom', 'solid');
+                }
+
+                //abajo derecha
+                if (a == limitX - 1 && b == limitY - 1) {
+                    $(item).css('border-right', 'solid');
+                    $(item).css('border-bottom', 'solid');
+                }
+
+                //lateral arriba
+                if (a == 0 && b >= 1 && b < (limitY - 1)) {
+                    $(item).css('border-top', 'solid');
+                }
+
+                //lateral abajo
+                if (a == (limitX - 1) && b >= 1 && b < (limitY - 1)) {
+                    $(item).css('border-bottom', 'solid');
+                }
+
+                //lateral derecha
+                if (a >= 1 && a < (limitX - 1) && b == (limitY - 1)) {
+                    $(item).css('border-right', 'solid');
+                }
+
+                //lateral izquierda
+                if (a >= 1 && a < (limitX - 1) && b == 0) {
+                    $(item).css('border-left', 'solid');
+                }
+
+            });
+
+        }
+
+        function searchUsers() {
+            ///peticiones para ASSIGNMENT
+            $.ajax({
+                url: '/Tbl_Place_Assignment/JUAS',
+                type: 'GET',
+                data: { id: idDiagram },
+                dataType: 'json',
+                success: function (data) {
+                    console.log("users here:",data);
+                    paintUsers(data);
+
+                },
+                error: function () {
+                    alert('Error while fetching data');
+                }
+
+            });
+
+        }
+
+    });
+
+
+        function paintUsers(datas) {
+
+            $.each($('table td'), function (i, item) {
+                // se obtienen sus atributos y se parsea
+
+                var data = $(item).attr('data-coord');
+               // console.log(data);
+                var dataCoord = JSON.parse(data);
+                //coords_reg = JSON.stringify(coords_reg);
+
+                for (let j = 0; j < datas.length; j++) {
+                    let coordsDC = JSON.parse(datas[j].CodeDataC);
+                    //console.log(coordsDC);
+                    //datas[j].CodeDataC = JSON.parse(datas[j].CodeDataC);
+                    let coordX = coordsDC.x;
+                    let coordY = coordsDC.y;
+                    if (dataCoord.x == coordX && dataCoord.y == coordY) {
+                        //EN LOS DATA COORD QUE COINCIDA CON LAS COORDS DE CODIGO TRAIDAS DEL AJAX PINTAR.
+                        $(item).css('background', '#e53e3e');
+                        $(item).html(datas[j].Coden);
+                        $(item).css('cursor', 'pointer');
+                        console.log("encontrado");
+
+                        item.setAttribute("code", datas[j].Coden);
+                        item.setAttribute("place", datas[j].CodeTypeP);
+                        item.setAttribute("code-chair", datas[j].CodeChair);
+                        item.setAttribute("id-employee", datas[j].UserId);
+                        item.setAttribute("name-employee", datas[j].UserName);
+                        item.setAttribute("lastname", datas[j].UserLast);
+                        item.setAttribute("ibt", datas[j].UserIbt);
+                        item.setAttribute("position", datas[j].UserPos);
+                        item.setAttribute("supervisor", datas[j].UserSup);
+                        item.setAttribute("email", datas[j].UserEmail);
+                        $(item).on('click', showModalUsers);
+                    } else {
+                        console.log("no ", coordX, coordY);
+                    }
+
+                }
+
+
+            });
+            debugger
+        }
+        /// MODAL
+        function showModalUsers() {
+            let code = $(this).attr('code');
+            let place = $(this).attr('place');
+            let code_chair = $(this).attr('code-chair');
+            let idemp = $(this).attr('id-employee');
+            let namemp = $(this).attr('name-employee');
+            let lastn = $(this).attr('lastname');
+            let ibt = $(this).attr('ibt');
+            let position = $(this).attr('position');
+            let supervisor = $(this).attr('supervisor');
+            let email = $(this).attr('email');
+
+            document.getElementById("code").value = code;
+            document.getElementById("place").value = place;
+            document.getElementById("codechair").value = code_chair;
+            document.getElementById("idemp").value = idemp;
+            document.getElementById("nemp").value = namemp;
+            document.getElementById("lastn").value = lastn;
+            document.getElementById("ibt").value = ibt;
+            document.getElementById("sup").value = supervisor;
+            document.getElementById("position").value = position;
+            document.getElementById("email").value = email;
+            // Mostrar la modal
+            $('#myModal').show();
+        }
+        $('.close').on('click', function () {
+            $('#myModal').hide();
+        });
+        // Cerrar la modal cuando se hace clic fuera de la modal
+        $(window).on('click', function (event) {
+            if (event.target.id === 'myModal') {
+                $('#myModal').hide();
+            }
+        });
+        ////
+
+    </script>
+}
+<style>
+    td, .fixed-size {
+        width: 65px;
+        height: 65px;
+    }
+
+    table {
+        border: 1px;
+    }
+
+    .succes {
+        background: #d9edf7;
+    }
+
+    .unsucces {
+        background-color: white;
+    }
+
+        .unsucces:hover {
+            background-color: #dfe4e7;
+        }
+
+    .nnn:hover {
+        background-color: #dfe4e7;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .close:hover {
+            color: #000;
+        }
+
+    .container-datas {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .container-datas > div {
+            width: 55%;
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+</style>
